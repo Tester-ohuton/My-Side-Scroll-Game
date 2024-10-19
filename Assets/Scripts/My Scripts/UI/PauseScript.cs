@@ -1,39 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseScript : MonoBehaviour
 {
-    [SerializeField] private Button CONTINUE;
-    [SerializeField] private GameObject PausePrefab;
-    [SerializeField] private Button SELECT;
-    [SerializeField] private Button RESTART;
-    // Start is called before the first frame update
-    void Start()
+    public static PauseScript instance;
+
+    private void Awake()
     {
-        PausePrefab.SetActive(false);
-       
+        if(instance == null)
+            instance = this;
+        else
+            Destroy(instance);
     }
 
-    // Update is called once per frame
+    public bool isPanelFlag;
+
+    [SerializeField] private GameObject pausePrefab;
+    [SerializeField] private Button resum;
+
+    void Start()
+    {
+        pausePrefab.SetActive(false);       
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Time.timeScale = 0;  // éûä‘í‚é~
-            PausePrefab.SetActive(true);
+            pausePrefab.SetActive(true);
+            isPanelFlag = true;
         }
-        else
-        {
-            CONTINUE.onClick.AddListener(Resume);
-        }
-
     }
 
-    private void Resume()
+    public void Resume()
     {
-        Time.timeScale = 1;  // çƒäJ
-        PausePrefab.SetActive(false);
+        pausePrefab.SetActive(false);
+        isPanelFlag = false;
     }
 }

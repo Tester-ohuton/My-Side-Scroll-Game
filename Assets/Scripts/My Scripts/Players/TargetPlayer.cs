@@ -24,17 +24,13 @@ public class TargetPlayer : MonoBehaviour
     // スピード
     private float speed = 5.0f;
 
-    // Start is called before the first frame update
     void Start()
     {
-        playerPos = GameObject.Find("hime_Ani03").GetComponent<Player>();
+        playerPos = GameObject.Find("Actor").GetComponent<Player>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
         // ２点間の距離を求める
         distance = Vector3.Distance(transform.position, playerPos.transform.position);
         
@@ -45,9 +41,7 @@ public class TargetPlayer : MonoBehaviour
         // 2点間の距離が値以下だったらプレイヤーに向かって移動
         if (distance <= range)
         {
-
             transform.position += Time.deltaTime * vec * speed;
-
         }
     }
 }

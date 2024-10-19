@@ -9,6 +9,7 @@ public class FadeGame : MonoBehaviour
 
 	public void StringArgFunction(string s)
 	{
-		SceneManager.LoadScene(s);
-	}
+		//SceneManager.LoadScene(s);
+        FadeManager.Instance.LoadScene(s, 2.0f);
+    }
 }

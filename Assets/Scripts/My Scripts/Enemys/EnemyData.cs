@@ -14,11 +14,12 @@ public class EnemyData : ScriptableObject
     // ================================
     public enum EnemyType
     {
-        DEBIAKUMA,
-        OBAKEFUROSHIKI,
-        NASUAZARASHI,
-        HARITOGEMAZIRO,
-        MINOTAUROSU,
+        ENEMY_1,
+        ENEMY_2,
+        ENEMY_3,
+        ENEMY_4,
+        ENEMY_5,
+        ENEMY_6,
 
 
         MAX_ENEMY

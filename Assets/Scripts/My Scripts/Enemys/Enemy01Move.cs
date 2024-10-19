@@ -202,12 +202,24 @@ public class Enemy01Move : MonoBehaviour
                 break;
 
             case Enemy01Mode.DIE:
+                // デバッグ用
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    if (enemy != null)
+                    {
+                        enemy.SetIsDead(true);
+                    }
+                }
+
                 // 倒れるモーション
                 animator.SetBool("isDie", true);
 
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("End"))
                 {
-                    enemy.SetIsDead(true);
+                    if (enemy != null)
+                    {
+                        enemy.SetIsDead(true);
+                    }
 
                     if (!isDead)
                     {
