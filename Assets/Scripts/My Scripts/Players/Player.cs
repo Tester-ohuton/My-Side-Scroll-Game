@@ -9,8 +9,11 @@ public class Player : MonoBehaviour
 	public float gravity;   //重力
 	public GameObject charaobj;     //キャラクターオブジェクト
 	public GameObject camobj;       //カメラオブジェクト
+    
+    [SerializeField] bool useGravity;
 
 	private float x;
+    private float y;
 	private int AttackTimer = 0;
 
 	bool flag = false;
@@ -36,9 +39,11 @@ public class Player : MonoBehaviour
     float LeaveTime = 0.0f;
 
     int WalkTimer = 0;
-    
-	// Use this for initialization
-	void Start()
+
+    public bool UseGravity { get => useGravity; set => useGravity = value; }
+
+    // Use this for initialization
+    void Start()
 	{
 		myitem = GetComponent<MyItem>();
         myEnemy = GetComponent<MyEnemy>();
@@ -57,125 +62,142 @@ public class Player : MonoBehaviour
 
     void Update()
 	{
-        // なにもなければ常にIdle状態
-        anime.SetBool("isWalk", false);
-
-        Vector3 effectpos = this.gameObject.transform.position;
-
-        effectpos.x = this.gameObject.transform.position.x - 0.6f;
-        effectpos.y = this.gameObject.transform.position.y - 1.1f;
-
-        // 立ち止まっているとき
-        if (anime.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (anime != null)
         {
-            // 放置時間が一定時間超えたら
-            LeaveTime += Time.deltaTime;
-            if(LeaveTime > 5.0f)
+            // なにもなければ常にIdle状態
+            anime.SetBool("isWalk", false);
+
+            Vector3 effectpos = this.gameObject.transform.position;
+
+            effectpos.x = this.gameObject.transform.position.x - 0.6f;
+            effectpos.y = this.gameObject.transform.position.y - 1.1f;
+
+            // 立ち止まっているとき
+            if (anime.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
             {
-                
-                anime.SetBool("isLeave", true);
-                
-            }
-        }
-        // 放置モーションに入ったら放置時間初期化
-        if(anime.GetCurrentAnimatorStateInfo(0).IsName("Doya"))
-        {
-            // 前方向へゆっくり向く
-            Vector3 newDir =
-                Vector3.RotateTowards(
-                    transform.forward, new Vector3(0, 0, -1),
-                    4.5f * Time.deltaTime, 0.0f);
-            this.transform.rotation = Quaternion.LookRotation(newDir);
-            LeaveTime = 0.0f;
-            anime.SetBool("isLeave", false);
-        }
-
-        // 攻撃モーション管理
-        AttackMotion();
-       
-        // 攻撃がヒットしていれば少し浮く
-        if(scissors1.GetComponent<AttackContoroll>().GethitFlg())
-        {
-            moveDirection.y = 1;
-        }
-
-        x = Input.GetAxis("Horizontal");
-
-        //CharacterControllerのisGroundedで接地判定
-        if (controller.isGrounded)
-        {
-            anime.SetBool("isJump", false);
-            
-            moveDirection = new Vector3(0, 0, x);
-            moveDirection = transform.TransformDirection(moveDirection);
-            //移動速度を掛ける
-            moveDirection *= speed;
-            //moveDirection.x *= Vec;
-
-            // ジャンプ
-            // ジャンプアニメが流れていないとき
-            if (Input.GetKeyDown(KeyCode.Space) &&
-                !anime.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-            {
-                // ジャンプアニメ
-                anime.SetBool("isJump", true);
-                // ジャンプアニメスピード
-                anime.SetFloat("animSpeed", 2.0f);
-                // ジャンプ中フラグオン
-                Jump = true;
-            }
-            // ジャンプアニメ中かつ27%まで進んだら上昇
-            if (anime.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
-                anime.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.27 &&
-                Jump)
-            {
-                Jump = false;
-                anime.SetFloat("animSpeed", 0.5f);
-                //ジャンプボタンが押下された場合、y軸方向への移動を追加する
-                moveDirection.y = jumpSpeed;
-            }
-
-            // 操作不可でなければ
-            if (!knock.GetIsInoperable())
-            {
-                if (x > 0)
+                // 放置時間が一定時間超えたら
+                LeaveTime += Time.deltaTime;
+                if (LeaveTime > 5.0f)
                 {
-                    LeaveTime = 0.0f;
-                    anime.SetBool("isWalk", true);
-                    moveDirection.x = Input.GetAxis("Horizontal") * speed;
-                    gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                    WalkTimer++;
-                }
 
-                if (x < 0)
-                {
-                    LeaveTime = 0.0f;
-                    anime.SetBool("isWalk", true);
-                    moveDirection.x = Input.GetAxis("Horizontal") * speed;
-                    gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
-                    WalkTimer++;
+                    anime.SetBool("isLeave", true);
+
                 }
             }
+            // 放置モーションに入ったら放置時間初期化
+            if (anime.GetCurrentAnimatorStateInfo(0).IsName("Doya"))
+            {
+                // 前方向へゆっくり向く
+                Vector3 newDir =
+                    Vector3.RotateTowards(
+                        transform.forward, new Vector3(0, 0, -1),
+                        4.5f * Time.deltaTime, 0.0f);
+                this.transform.rotation = Quaternion.LookRotation(newDir);
+                LeaveTime = 0.0f;
+                anime.SetBool("isLeave", false);
+            }
 
-        }
-        else  // ジャンプ中の左右移動
-        {
-            moveDirection.x = Input.GetAxis("Horizontal") * (speed / 2);
-            //                                               　 ↑ジャンプ中なので移動力は少なめ
-        }
+            // 攻撃モーション管理
+            AttackMotion();
 
-        if (WalkTimer == 15)
-        {
-            WalkTimer = 0;
-        }
+            // 攻撃がヒットしていれば少し浮く
+            if (scissors1.GetComponent<AttackContoroll>().GethitFlg())
+            {
+                moveDirection.y = 1;
+            }
 
+            x = Input.GetAxis("Horizontal");
+            y = Input.GetAxis("Vertical");
+
+            //CharacterControllerのisGroundedで接地判定
+            if (controller.isGrounded)
+            {
+                anime.SetBool("isJump", false);
+
+                moveDirection = new Vector3(0, y, x);
+                moveDirection = transform.TransformDirection(moveDirection);
+                //移動速度を掛ける
+                moveDirection *= speed;
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    // ジャンプ中フラグオン
+                    Jump = true;
+
+                    //ジャンプボタンが押下された場合、y軸方向への移動を追加する
+                    moveDirection.y = jumpSpeed;
+                }
+
+                // ジャンプ
+                // ジャンプアニメが流れていないとき
+                if (Input.GetKeyDown(KeyCode.Space) &&
+                    !anime.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+                {
+                    // ジャンプアニメ
+                    anime.SetBool("isJump", true);
+                    // ジャンプアニメスピード
+                    anime.SetFloat("animSpeed", 2.0f);
+                    // ジャンプ中フラグオン
+                    Jump = true;
+                }
+                // ジャンプアニメ中かつ27%まで進んだら上昇
+                if (anime.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
+                    anime.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.27 &&
+                    Jump)
+                {
+                    Jump = false;
+                    anime.SetFloat("animSpeed", 0.5f);
+                    //ジャンプボタンが押下された場合、y軸方向への移動を追加する
+                    moveDirection.y = jumpSpeed;
+                }
+
+                // 操作不可でなければ
+                if (!knock.GetIsInoperable())
+                {
+                    if (x > 0)
+                    {
+                        LeaveTime = 0.0f;
+                        anime.SetBool("isWalk", true);
+                        moveDirection.x = Input.GetAxis("Horizontal") * speed;
+                        gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+                        WalkTimer++;
+                    }
+
+                    if (x < 0)
+                    {
+                        LeaveTime = 0.0f;
+                        anime.SetBool("isWalk", true);
+                        moveDirection.x = Input.GetAxis("Horizontal") * speed;
+                        gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
+                        WalkTimer++;
+                    }
+                }
+
+            }
+            else  // ジャンプ中の左右移動
+            {
+                moveDirection.x = Input.GetAxis("Horizontal") * (speed / 2);
+                //                                               　 ↑ジャンプ中なので移動力は少なめ
+            }
+
+            if (WalkTimer == 15)
+            {
+                WalkTimer = 0;
+            }
+        }
 
         Vector3 pos = transform.position;
         //pos.x = 0.0f;
         transform.position = pos;
 
-        //重力処理
-        moveDirection.y -= gravity * Time.deltaTime;
+        if (useGravity)
+        {
+            GravityScale();
+        }
+        else
+        {
+            GravitySmall();
+        }
 
         //CharacterControllerを移動させる
         // ノックバック処理の操作不可フラグがオフのとき操作可能
@@ -195,6 +217,17 @@ public class Player : MonoBehaviour
         
     }
 
+    private void GravityScale()
+    {
+        //重力処理
+        moveDirection.y -= gravity * Time.deltaTime;
+    }
+
+    private void GravitySmall()
+    {
+        //重力無効処理
+        moveDirection.y += gravity * Time.deltaTime;
+    }
 
     private void AttackMotion()
     {

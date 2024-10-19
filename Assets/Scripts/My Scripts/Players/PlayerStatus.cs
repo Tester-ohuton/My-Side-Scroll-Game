@@ -56,23 +56,29 @@ public class PlayerStatus : MonoBehaviour
         {
             SetMinusHp(50);
         }
-        
 
-        if (curHP <= 0)
+        if (anime != null)
         {
-            // 死んだアニメ再生
-            anime.SetBool("isDie", true);
-
-            if (anime.GetCurrentAnimatorStateInfo(0).IsName("DieEnd"))
+            if (curHP <= 0)
             {
-                // プレイヤーを非アクティブ化
-                playerObj.SetActive(false);
-                // 墓生成
-                Instantiate(ItemObject, transform.position, Quaternion.identity);
-                // 当たり判定なくす
-                ItemObject.layer = LayerMask.NameToLayer("Invisible");
-                // 死んだときSE
-                seobj.GetComponent<SEManager>().PlaySE(0);
+                // 死んだアニメ再生
+                anime.SetBool("isDie", true);
+
+                if (anime.GetCurrentAnimatorStateInfo(0).IsName("DieEnd"))
+                {
+                    // プレイヤーを非アクティブ化
+                    playerObj.SetActive(false);
+                    // 墓生成
+                    Instantiate(ItemObject, transform.position, Quaternion.identity);
+                    // 当たり判定なくす
+                    ItemObject.layer = LayerMask.NameToLayer("Invisible");
+
+                    if (seobj != null)
+                    {
+                        // 死んだときSE
+                        seobj.GetComponent<SEManager>().PlaySE(0);
+                    }
+                }
             }
         }
     }

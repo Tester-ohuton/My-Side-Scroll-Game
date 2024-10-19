@@ -9,7 +9,6 @@ public class HPUIRotate : MonoBehaviour
     void Start()
     {
         defrot = transform.localRotation.eulerAngles;
-
     }
 
     void Update()

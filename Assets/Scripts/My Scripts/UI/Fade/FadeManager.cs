@@ -80,16 +80,17 @@ public class FadeManager : MonoBehaviour
 				List<string> scenes = new List<string>();
                 scenes.Add("Title");
 				scenes.Add("Choice");
-				scenes.Add("Game");
-				scenes.Add("Game2");
-				//scenes.Add("Result");
-				scenes.Add("Game Clear");
+                scenes.Add("Demo");
+                scenes.Add("Level 1");
+				scenes.Add("Level 2");
+				scenes.Add("Level 3");
+                scenes.Add("Game Clear");
 				scenes.Add("Game Over");
-				
+                scenes.Add("Result");
 
 
-				//Scene‚ªˆê‚Â‚à‚È‚¢ .
-				if (scenes.Count == 0)
+                //Scene‚ªˆê‚Â‚à‚È‚¢ .
+                if (scenes.Count == 0)
 				{
 					GUI.Box(new Rect(10, 10, 200, 50), "Fade Manager(Debug Mode)");
 					GUI.Label(new Rect(20, 35, 180, 20), "Scene not found.");

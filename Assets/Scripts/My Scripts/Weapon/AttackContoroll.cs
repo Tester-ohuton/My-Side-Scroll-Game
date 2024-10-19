@@ -1,14 +1,12 @@
-//using System.Collections;
-//using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackContoroll : MonoBehaviour
 {
-    bool Hitflg;
+    bool hitflg;
 
-    public float EffectPosY;
+    public float effectPosY;
 
-    public GameObject DamageEffect;
+    public GameObject damageEffect;
 
     EnemyStatus enemyStatus;
     
@@ -20,17 +18,15 @@ public class AttackContoroll : MonoBehaviour
 
 	int AttackCnt = 1;
 
-	// Start is called before the first frame update
 	void Start()
     {
-        myEnemy = GameObject.Find("hime_Ani03").GetComponent<MyEnemy>();
+        myEnemy = GameObject.Find("Actor").GetComponent<MyEnemy>();
 
-        Hitflg = false;
+        hitflg = false;
 
         se = GameObject.Find("SE");
     }
 
-    // Update is called once per frame
     void Update()
     {
 		if (AttackCnt == 1)
@@ -48,11 +44,13 @@ public class AttackContoroll : MonoBehaviour
     void OnTriggerEnter(Collider t)
     {        
         // オブジェクトタグがEnemyのとき
-        if (!Hitflg && t.gameObject.CompareTag("Enemy"))
+        if (!hitflg && t.gameObject.CompareTag("Enemy"))
         {
-            // 攻撃ヒット音
-            se.GetComponent<SEManager>().PlaySE(1);
-
+            if (se != null)
+            {
+                // 攻撃ヒット音
+                se.GetComponent<SEManager>().PlaySE(1);
+            }
             // 敵キャラを倒したかを取得
             //if()
             enemyinfo = t.gameObject.GetComponent<EnemyInfo>();
@@ -63,7 +61,7 @@ public class AttackContoroll : MonoBehaviour
 
             enemyStatus = t.gameObject.GetComponent<EnemyStatus>();
 
-            Hitflg = true;
+            hitflg = true;
 
             // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
             int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
@@ -78,11 +76,14 @@ public class AttackContoroll : MonoBehaviour
                 }
             }
 
-            GameObject effect = Instantiate(DamageEffect) as GameObject;
-            effect.transform.position = new Vector3(
-                this.gameObject.transform.position.x,
-                this.gameObject.transform.position.y + EffectPosY,
-                this.gameObject.transform.position.z - 2.0f);
+            if (damageEffect != null)
+            {
+                GameObject effect = Instantiate(damageEffect) as GameObject;
+                effect.transform.position = new Vector3(
+                    this.gameObject.transform.position.x,
+                    this.gameObject.transform.position.y + effectPosY,
+                    this.gameObject.transform.position.z - 2.0f);
+            }
 
             AttackCnt++;
         }
@@ -90,12 +91,12 @@ public class AttackContoroll : MonoBehaviour
 
     public void SethitFlg(bool flg)
     {
-        Hitflg = flg;
+        hitflg = flg;
     }
 
     public bool GethitFlg()
     {
-        return Hitflg;
+        return hitflg;
     }
 
     void OnTriggerExit(Collider t)

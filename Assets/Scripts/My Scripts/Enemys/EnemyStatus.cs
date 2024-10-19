@@ -37,6 +37,7 @@ public class EnemyStatus : MonoBehaviour
         curHP = maxHP = enemyinfo.enemyData.GetHp();
         ATK = enemyinfo.enemyData.GetATK();
         DEF = enemyinfo.enemyData.GetDEF();
+        HPUI.SetActive(true);
         hpSlider = HPUI.transform.Find("HPBar").GetComponent<Slider>();
         hpSlider.value = 1.0f;
 
@@ -45,11 +46,10 @@ public class EnemyStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 仮：QキーでHP現象
-        if(Input.GetKeyUp(KeyCode.Z))
+        // 仮：ZキーでHP現象
+        if(Input.GetKeyUp(KeyCode.Return))
         {
-            SetHp(20);
-            
+            SetHp(20);            
         }
     }
 
@@ -90,7 +90,5 @@ public class EnemyStatus : MonoBehaviour
     public void UpdateHPValue()
     {
         hpSlider.value = (float)GetHp() / (float)GetMaxhp();
-    }
-
-  
+    }  
 }

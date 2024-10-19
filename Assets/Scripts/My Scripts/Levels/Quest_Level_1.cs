@@ -26,7 +26,7 @@ public class Quest_Level_1 : MonoBehaviour
             if (!fadestart)
             {
                 fadestart = true;
-                FadeManager.Instance.LoadScene("Result", 2.0f);
+                FadeManager.Instance.LoadScene("Game Clear", 2.0f);
             }
         }
     }
