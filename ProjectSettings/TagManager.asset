@@ -7,7 +7,6 @@ TagManager:
   - Enemy
   - Item
   - Wall
-  - Pillar
   layers:
   - Default
   - TransparentFX
