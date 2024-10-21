@@ -73,12 +73,15 @@ public class Enemy : MonoBehaviour
                 // 各敵の倒した数を更新
                 for (int i = 0; i < (int)EnemyData.EnemyType.MAX_ENEMY; ++i)
                 {
-                    quest_Level_1.EnemyDefeated((EnemyData.EnemyType)i);
+                    quest_Level_1.EnemyEncountered((EnemyData.EnemyType)i);
                 }
             }
 
-            Destroy(gameObject.transform.root.gameObject);
-            
+            // 敵をプールに戻す
+            ObjectPool.instance.ReturnToPool(gameObject);
+
+            //Destroy(gameObject.transform.root.gameObject);
+
             if (gameObject.name == "obakefurosiki:obakefurosiki")
             {
                 flag = true;
