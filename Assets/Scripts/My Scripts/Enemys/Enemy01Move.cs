@@ -32,7 +32,8 @@ public class Enemy01Move : MonoBehaviour
     // プレイヤーを視認する範囲
     private float visualRange = 5.0f;
 
-    public GameObject playerObj;
+    // privateでPlayer取得
+    private GameObject playerObj;
 
     // プレイヤーの座標取得用
     Player player;
@@ -76,6 +77,7 @@ public class Enemy01Move : MonoBehaviour
         // 初期位置取得
         initPos = this.transform.position;
 
+        playerObj = GameObject.Find("Actor");
         player = playerObj.GetComponent<Player>();
 
         dir = 1;

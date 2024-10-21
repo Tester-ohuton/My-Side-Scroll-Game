@@ -267,13 +267,6 @@ public class Player : MonoBehaviour
 
             // クエストをクリアして
             StaticEnemy.IsUpdate = true;
-            if(quest_Level_1 != null)
-            {
-                if(quest_Level_1.isClear)
-                {
-
-                }
-            }
 
             // アイテムを取得したら更新可能
             StaticItem.IsUpdate = true;

@@ -1,63 +1,35 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Quest_Level_1 : MonoBehaviour
 {
-    public bool isClear = false;
-
-    // シーン内の敵キャラの数
-    private int totalEnemies;
-
-    private int[] defeatedEnemies;
-
-    bool fadestart = false;
+    private Dictionary<EnemyData.EnemyType, int> enemyCount;
 
     void Start()
     {
-        // シーン内の全ての敵キャラをカウント
-        totalEnemies = SumEnemys();
-        defeatedEnemies = new int[(int)EnemyData.EnemyType.MAX_ENEMY];
-        Debug.Log($"totalEnemies: {totalEnemies}");
-    }
+        enemyCount = new Dictionary<EnemyData.EnemyType, int>();
 
-    private void Update()
-    {
-        if (isClear)
+        // Initialize enemy count dictionary with all enemy types
+        foreach (EnemyData.EnemyType type in System.Enum.GetValues(typeof(EnemyData.EnemyType)))
         {
-            if (!fadestart)
+            if (type != EnemyData.EnemyType.MAX_ENEMY)
             {
-                fadestart = true;
-                FadeManager.Instance.LoadScene("Game Clear", 2.0f);
+                enemyCount[type] = 0;
             }
         }
     }
 
-    public void EnemyDefeated(EnemyData.EnemyType type)
+    public void EnemyEncountered(EnemyData.EnemyType type)
     {
-        defeatedEnemies[(int)type]++;
-        Debug.Log($"defeatedEnemies:{defeatedEnemies[(int)type]}");
-
-        // 全ての敵が倒されたか確認
-        if (totalEnemies <= defeatedEnemies[(int)type])
+        if (enemyCount.ContainsKey(type))
         {
-            isClear = true;
-            Debug.Log("Level Clear!");
+            enemyCount[type]++;
+            Debug.Log(enemyCount[type]);
         }
     }
 
-    // 敵キャラを合計するメソッド
-    public int SumEnemys()
+    public int GetEnemyCount(EnemyData.EnemyType type)
     {
-        int totalValue = 0;
-
-        // シーン内の全てのEnemyIDコンポーネントを持つオブジェクトを検索
-        EnemyID[] enemyIDs = FindObjectsOfType<EnemyID>();
-
-        // 各EnemyIDのIDを合計
-        foreach (var enemyID in enemyIDs)
-        {
-            totalValue += enemyID.sum;
-        }
-
-        return totalValue;
+        return enemyCount.ContainsKey(type) ? enemyCount[type] : 0;
     }
 }
