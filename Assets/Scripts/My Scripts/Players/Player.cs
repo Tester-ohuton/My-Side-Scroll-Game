@@ -9,8 +9,11 @@ public class Player : MonoBehaviour
 	public float gravity;   //重力
 	public GameObject charaobj;     //キャラクターオブジェクト
 	public GameObject camobj;       //カメラオブジェクト
-    
-    [SerializeField] bool useGravity;
+
+    public bool moving { get; set; }
+
+    public bool stopMoverment = false;
+    public bool useGravity;
 
 	private float x;
     private float y;
@@ -19,7 +22,7 @@ public class Player : MonoBehaviour
 	bool flag = false;
 	bool Attack = false;
 
-	private Vector3 moveDirection = Vector3.zero;  //移動方向
+    private Vector3 moveDirection = Vector3.zero;  //移動方向
 
 	private ItemInfo iteminfo;
 	private MyItem myitem;
@@ -32,15 +35,13 @@ public class Player : MonoBehaviour
     Animator anime;
 
     // 攻撃モーションで使用
-    bool Jump;
+    bool jumpFlag;
     private GameObject scissors1;
 
     // 放置時間
     float LeaveTime = 0.0f;
 
     int WalkTimer = 0;
-
-    public bool UseGravity { get => useGravity; set => useGravity = value; }
 
     // Use this for initialization
     void Start()
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour
         scissors1 = GameObject.Find("scissors1");
         quest_Level_1 = GameObject.Find("Quest").GetComponent<Quest_Level_1>();
 
-        Jump = false;
+        jumpFlag = false;
 
     }
 
@@ -106,8 +107,8 @@ public class Player : MonoBehaviour
                 moveDirection.y = 1;
             }
 
-            x = Input.GetAxis("Horizontal");
-            y = Input.GetAxis("Vertical");
+            x = Input.GetAxis(Const.Horizontal);
+            y = Input.GetAxis(Const.Vetical);
 
             //CharacterControllerのisGroundedで接地判定
             if (controller.isGrounded)
@@ -122,7 +123,7 @@ public class Player : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     // ジャンプ中フラグオン
-                    Jump = true;
+                    jumpFlag = true;
 
                     //ジャンプボタンが押下された場合、y軸方向への移動を追加する
                     moveDirection.y = jumpSpeed;
@@ -138,14 +139,14 @@ public class Player : MonoBehaviour
                     // ジャンプアニメスピード
                     anime.SetFloat("animSpeed", 2.0f);
                     // ジャンプ中フラグオン
-                    Jump = true;
+                    jumpFlag = true;
                 }
                 // ジャンプアニメ中かつ27%まで進んだら上昇
                 if (anime.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
                     anime.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.27 &&
-                    Jump)
+                    jumpFlag)
                 {
-                    Jump = false;
+                    jumpFlag = false;
                     anime.SetFloat("animSpeed", 0.5f);
                     //ジャンプボタンが押下された場合、y軸方向への移動を追加する
                     moveDirection.y = jumpSpeed;
@@ -215,6 +216,20 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
         }
         
+    }
+
+    private void FixedUpdate()
+    {
+        //animation    
+        bool has_H_Input = !Mathf.Approximately(x, 0);
+
+        if (!stopMoverment) moving = has_H_Input;
+        else moving = false;
+
+        float inputSpeed = Mathf.Clamp01(Mathf.Abs(x));
+
+        anime.SetBool(Const.Moving, moving);
+        anime.SetFloat(Const.Speed, inputSpeed);
     }
 
     private void GravityScale()

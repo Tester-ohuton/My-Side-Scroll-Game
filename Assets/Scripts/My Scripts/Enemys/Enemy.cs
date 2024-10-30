@@ -77,10 +77,7 @@ public class Enemy : MonoBehaviour
                 }
             }
 
-            // “G‚ğƒv[ƒ‹‚É–ß‚·
-            ObjectPool.instance.ReturnToPool(gameObject);
-
-            //Destroy(gameObject.transform.root.gameObject);
+            Destroy(gameObject.transform.root.gameObject);
 
             if (gameObject.name == "obakefurosiki:obakefurosiki")
             {
