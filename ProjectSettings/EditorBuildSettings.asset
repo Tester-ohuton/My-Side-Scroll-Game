@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1 3.unity
     guid: e93669fcc1b7b664cac58e9ed71a12f8
   - enabled: 1
-    path: Assets/Scenes/Demo.unity
+    path: Assets/Isima/IsimaDemo.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Result.unity

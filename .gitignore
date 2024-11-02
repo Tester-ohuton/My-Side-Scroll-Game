@@ -70,3 +70,23 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+Assets/RPG Tiny Hero Duo/
+Assets/Materials/
+Assets/Kiki/
+Assets/Kawaii Slimes/
+Assets/RPG Tiny Hero Duo.meta
+Assets/Kiki.meta
+Assets/Kawaii Slimes.meta
+Assets/Kevin Iglesias/
+Assets/Kevin Iglesias.meta
+Assets/Audio/
+Assets/DoubleL/
+Assets/Prefabs/Enemy/Slime_01.prefab.meta
+Assets/DoubleL.meta
+Assets/Isima/IsimaDemo.unity.meta
+Assets/Model/Materials/
+Assets/Model/Materials.meta
+Assets/Model/FBX.meta
+Assets/Model/FBX/hime_Ani03.fbx
+Assets/Model/FBX/hime_Ani03.fbx.meta
+Assets/Scripts/My Scripts/Players/GroundCheck3D.cs.meta
