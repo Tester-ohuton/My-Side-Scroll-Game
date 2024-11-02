@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 	private MyItem myitem;
     private MyEnemy myEnemy;
     private Quest_Level_1 quest_Level_1;
+    private GroundCheck3D groundCheck3D;
+    private Rigidbody rb3D;
 
     CharacterController controller;
     KnockBack knock;
@@ -52,9 +54,11 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         knock = GetComponent<KnockBack>();
         anime = GetComponent<Animator>();
+        groundCheck3D = GetComponent<GroundCheck3D>();
+        rb3D = GetComponent<Rigidbody>();
 
         // コライダー取得
-        scissors1 = GameObject.Find("scissors1");
+        scissors1 = GameObject.Find(Const.scissors1);
         quest_Level_1 = GameObject.Find("Quest").GetComponent<Quest_Level_1>();
 
         jumpFlag = false;
@@ -110,24 +114,20 @@ public class Player : MonoBehaviour
             x = Input.GetAxis(Const.Horizontal);
             y = Input.GetAxis(Const.Vetical);
 
-            //CharacterControllerのisGroundedで接地判定
-            if (controller.isGrounded)
+            
+            if (groundCheck3D.CheckGroundStatus())
             {
                 anime.SetBool("isJump", false);
 
-                moveDirection = new Vector3(0, y, x);
+                //moveDirection = new Vector3(0, y, x);
+                //moveDirection = transform.TransformDirection(moveDirection);
+                ////移動速度を掛ける
+                //moveDirection *= speed;
+
+                moveDirection = new Vector3(0, 0, x);
                 moveDirection = transform.TransformDirection(moveDirection);
                 //移動速度を掛ける
                 moveDirection *= speed;
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    // ジャンプ中フラグオン
-                    jumpFlag = true;
-
-                    //ジャンプボタンが押下された場合、y軸方向への移動を追加する
-                    moveDirection.y = jumpSpeed;
-                }
 
                 // ジャンプ
                 // ジャンプアニメが流れていないとき
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
                     {
                         LeaveTime = 0.0f;
                         anime.SetBool("isWalk", true);
-                        moveDirection.x = Input.GetAxis("Horizontal") * speed;
+                        moveDirection.x = Input.GetAxis(Const.Horizontal) * speed;
                         gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
                         WalkTimer++;
                     }
@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
                     {
                         LeaveTime = 0.0f;
                         anime.SetBool("isWalk", true);
-                        moveDirection.x = Input.GetAxis("Horizontal") * speed;
+                        moveDirection.x = Input.GetAxis(Const.Horizontal) * speed;
                         gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
                         WalkTimer++;
                     }
@@ -177,14 +177,17 @@ public class Player : MonoBehaviour
             }
             else  // ジャンプ中の左右移動
             {
-                moveDirection.x = Input.GetAxis("Horizontal") * (speed / 2);
+                moveDirection.x = Input.GetAxis(Const.Horizontal) * (speed / 2);
                 //                                               　 ↑ジャンプ中なので移動力は少なめ
             }
+            
 
+            
             if (WalkTimer == 15)
             {
                 WalkTimer = 0;
             }
+            
         }
 
         Vector3 pos = transform.position;
