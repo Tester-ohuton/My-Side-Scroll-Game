@@ -17,48 +17,38 @@ public class Enemy01Move : MonoBehaviour
         MAX
     }
 
-    // 現在のモード
-    Enemy01Mode curMode;
+    // 現在のモードをインスペクタで設定可能にする
+    [SerializeField] private Enemy01Mode curMode;
 
-    Enemy enemy;
-    EnemyStatus status;
+    [SerializeField] private Enemy01Mode initialMode = Enemy01Mode.WALK;
 
-    // 初期位置取得用
+    [SerializeField] private Enemy01Mode preMode;
+
+    // 各モードごとのカスタマイズ用パラメータ
+    [Header("Movement Parameters")]
+    [SerializeField] private float walkRange = 2.0f;      // 歩く範囲(ゲーム開始時のスポーン位置を起点)
+    [SerializeField] private float visualRange = 5.0f;    // プレイヤーを視認する範囲
+    [SerializeField] private float walkSpeed = 1.0f;      // 歩く速度
+    [SerializeField] private float rushSpeed = 2.0f;      // 突進速度
+
+    // 他のフィールド
     private Vector3 initPos;
-
-    // 歩く範囲(ゲーム開始時のスポーン位置を起点)
-    private float walkRange = 2.0f;
-
-    // プレイヤーを視認する範囲
-    private float visualRange = 5.0f;
-
-    // privateでPlayer取得
     private GameObject playerObj;
-
-    // プレイヤーの座標取得用
-    Player player;
-
+    private Player player;
     private Animator animator;
     private AnimatorStateInfo animeInfo;
-
-    // 向いている方向
+    private Transform thistrans;
+    private Rigidbody rb;
+    private GameObject scissors;
+    private Vector3 pos;
+    private float KnockTime = 0.0f;
+    private int Step;
+    private bool isStart = false;
+    private bool isDead = false;
+    private Enemy enemy;
+    private EnemyStatus status;
     [SerializeField] private float dir;
-
-    Transform thistrans;
-
     [SerializeField] private Vector3 BackDir;
-
-    
-    Rigidbody rb;
-
-    GameObject scissors;
-    Vector3 pos;
-    float KnockTime = 0.0f;
-    int Step;
-    bool isStart = false;
-    Enemy01Mode preMode;
-
-    bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -211,6 +201,12 @@ public class Enemy01Move : MonoBehaviour
                     {
                         enemy.SetIsDead(true);
                     }
+
+                    if (!isDead)
+                    {
+                        StaticEnemy.IsUpdate = true;
+                        isDead = true;
+                    }
                 }
 
                 // 倒れるモーション
@@ -323,8 +319,6 @@ public class Enemy01Move : MonoBehaviour
                 break;
             
             case 1:
-                // ノックバック処理終了
-                isStart = false;
                 // 処理順を最初に戻す
                 Step = 0;
                 // ノックバック前のモードに戻す
@@ -335,31 +329,23 @@ public class Enemy01Move : MonoBehaviour
         }
     }
 
-    
     private void OnCollisionEnter(Collision collision)
     {
         rb.isKinematic = true;
-        // プレイヤー
+
         if (collision.gameObject.tag == "Player")
         {
-            // ぶつかったら歩き
             animator.SetBool("isCollide", true);
-            //// 初期位置へ戻るモードへ
-            //curMode = EnemyMode.BACK;
-            Debug.Log("ぶつかった");
         }
-        //curMode = EnemyMode.WALK;
     }
 
     private void OnCollisionExit(Collision collision)
     {
         rb.isKinematic = false;
-        // プレイヤー
         if (collision.gameObject.tag == "Player")
         {
-            // ぶつかって離れたら
             animator.SetBool("isCollide", false);
-            
+            isStart = false;
         }
     }
 }
