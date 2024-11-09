@@ -189,7 +189,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u9999\u5DDD\u540D\u7269 \u3042\u3093\u3082\u3061\u96D1\u716E \u6750\u6599\u96C6\u3081\u306E\u65C5"
+  m_Text: "Side Scroll 3D\u7248"
 --- !u!222 &61767472
 CanvasRenderer:
   m_ObjectHideFlags: 0
