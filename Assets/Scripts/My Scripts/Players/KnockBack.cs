@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KnockBack : MonoBehaviour
 {
-    // --- 2021/1013 鈴木逸斗追加 
     // プレイヤーステータス取得用
     private PlayerStatus playerStatus;
     // 接触した瞬間のプレイヤー座標
@@ -19,7 +18,8 @@ public class KnockBack : MonoBehaviour
     // 敵のステータス取得用
     EnemyStatus enemyStatus;
 
-    CharacterController controller;
+    //CharacterController controller;
+    Rigidbody2D rb2D;
 
     // 操作不可時間
     float inoperableTime = 1.0f;
@@ -30,6 +30,8 @@ public class KnockBack : MonoBehaviour
     // --- 点滅用 ---
     // 子のRendererの配列
     Renderer[] childrenRenderer;
+
+    SpriteRenderer spriteRenderer;
 
     // 今childRendererが有効か無効化のフラグ
     bool isEnabledRenderers;
@@ -59,6 +61,8 @@ public class KnockBack : MonoBehaviour
 
     Animator anime;
 
+    GameObject se;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -66,11 +70,14 @@ public class KnockBack : MonoBehaviour
         invincibleTime = flickerDuration;
 
         playerStatus = GetComponent<PlayerStatus>();
-        controller = GetComponent<CharacterController>();
+        rb2D = GetComponent<Rigidbody2D>();
 
         childrenRenderer = GetComponentsInChildren<Renderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         anime = GetComponent<Animator>();
+
+        se = GameObject.Find("SE");
     }
 
     // Update is called once per frame
@@ -94,9 +101,10 @@ public class KnockBack : MonoBehaviour
                 anime.SetBool("isKnock", true);
                 // プレイヤーが受けるダメージ（敵の攻撃力 - プレイヤーの防御力）
                 // 受けるダメージ０より大きい時
-                //Debug.Log(enemyStatus.GetATK());
+                
                 if (enemyStatus.GetATK() - StaticStatus.GetPlayerDEF() > 0)
                 {
+                    //Debug.Log(enemyStatus.GetATK() - StaticStatus.GetPlayerDEF());
                     playerStatus.SetMinusHp(enemyStatus.GetATK() - StaticStatus.GetPlayerDEF());
                 }
                 // ０以下なら最低１ダメージ
@@ -110,7 +118,8 @@ public class KnockBack : MonoBehaviour
 
             // プレイヤー仰け反る（ヒットストップ？）
             case 1:
-                
+
+                spriteRenderer.color = new Color(0.5f, 0, 0, 1f);
 
                 // レイヤーをInvisibleに変更(当たり判定をなくす)
                 this.gameObject.layer = LayerMask.NameToLayer("Invisible");
@@ -125,7 +134,7 @@ public class KnockBack : MonoBehaviour
                 if (Mathf.Abs(prePos.x - this.transform.position.x) < 1)
                 {
                     // ノックバック
-                    controller.Move(distination * 0.5f);
+                    Knock(distination.x);
 
                     // 壁に詰まったときよう...強制的に次のステップへ
                     KnockTime += Time.deltaTime;
@@ -231,6 +240,8 @@ public class KnockBack : MonoBehaviour
 
             if (flickerDuration <= flickerTotalElapsedTime)
             {
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+
                 //ここが被ダメージ点滅の終了時の処理。
                 isDamaged = false;
 
@@ -254,30 +265,15 @@ public class KnockBack : MonoBehaviour
         }
     }
 
-
-    // CharacterControllerを使って動いている時用
-    private void OnControllerColliderHit(ControllerColliderHit other)
-    {
-        // プレイヤーがCharacterControllerで動いている時
-        // 敵と衝突
-        if (other.gameObject.tag == "Enemy" && !isStart)
-        {
-            isStart = true;
-            // 接触時敵とプレイヤーの座標取得
-            enemyPos = other.gameObject.transform.position;
-            prePos = this.transform.position;
-            // 動いているときはcapsule colliderがついているオブジェクトと当たり判定を取っている
-            // 上記のオブジェクトにステータス情報があるため上記のオブジェクトからGetComponent
-            enemyStatus = other.gameObject.GetComponent<EnemyStatus>();
-            
-        }
-
-    }
-
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.tag == "Enemy" && !isStart)
         {
+            if (se != null)
+            {
+                // 攻撃ヒット音
+                se.GetComponent<SEManager>().PlaySE(2);
+            }
 
             // プレイヤーが止まっている時
             // 敵と衝突
@@ -292,7 +288,12 @@ public class KnockBack : MonoBehaviour
         }
     }
 
-
+    private void Knock(float knockX)
+    {
+        // ノックバックの力をRigidbodyに加える
+        rb2D.velocity = Vector2.zero; // 現在の速度をリセット
+        rb2D.AddForce(new Vector2(knockX, 0), ForceMode2D.Impulse);
+    }
 
     public bool GetIsInoperable()
     {

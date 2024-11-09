@@ -15,19 +15,12 @@ public class Enemy : MonoBehaviour
 
     public static bool flag = false;
 
-    private Quest_Level_1 quest_Level_1;
-    GameObject gameobj;
-
     bool fade = false;
 
     public void Init()
     {
         item = GetComponent<DropItem>();
         sta = GetComponent<EnemyStatus>();
-
-        // 任意のオブジェクトを取得する
-        gameobj = GameObject.Find("Quest");
-        quest_Level_1 = gameobj.GetComponent<Quest_Level_1>();
     }
 
     // Update is called once per frame
@@ -68,14 +61,7 @@ public class Enemy : MonoBehaviour
             // ↓どちらか
             //Destroy(gameObject.transform.parent.gameObject);
 
-            if (quest_Level_1 != null)
-            {
-                // 各敵の倒した数を更新
-                for (int i = 0; i < (int)EnemyData.EnemyType.MAX_ENEMY; ++i)
-                {
-                    quest_Level_1.EnemyEncountered((EnemyData.EnemyType)i);
-                }
-            }
+            Quest_Level_1.OnEnemyDestroyCountEvent.Invoke();
 
             Destroy(gameObject.transform.root.gameObject);
 

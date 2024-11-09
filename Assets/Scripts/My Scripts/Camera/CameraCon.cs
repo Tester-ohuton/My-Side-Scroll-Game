@@ -16,7 +16,7 @@ public class CameraCon : MonoBehaviour
 		cameraTrans.rotation = Quaternion.Euler(cameraRot);
 	}
 
-	void LateUpdate()
+    void LateUpdate()
 	{
 		if (cameraTrans != null)
 		{

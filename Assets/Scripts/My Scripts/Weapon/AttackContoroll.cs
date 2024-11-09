@@ -11,7 +11,7 @@ public class AttackContoroll : MonoBehaviour
     EnemyStatus enemyStatus;
     
     private MyEnemy myEnemy;
-    private EnemyInfo enemyinfo;
+    private EnemyInfo enemyInfo;
     private Enemy enemy;
 
     GameObject se;
@@ -41,37 +41,38 @@ public class AttackContoroll : MonoBehaviour
 		}
 	}
 
-    void OnTriggerEnter(Collider t)
-    {        
+    void OnTriggerEnter2D(Collider2D collision)
+    {
         // オブジェクトタグがEnemyのとき
-        if (!hitflg && t.gameObject.CompareTag("Enemy"))
+        if (!hitflg && collision.CompareTag("Enemy"))
         {
             if (se != null)
             {
                 // 攻撃ヒット音
                 se.GetComponent<SEManager>().PlaySE(1);
             }
-            // 敵キャラを倒したかを取得
-            //if()
-            enemyinfo = t.gameObject.GetComponent<EnemyInfo>();
-            
-            enemy = t.gameObject.GetComponent<Enemy>();
-            if (enemy != null && enemy.IsHitFlag()) return;
-            if (enemy.isHitFlag) return;
 
-            enemyStatus = t.gameObject.GetComponent<EnemyStatus>();
+            // 敵キャラを倒したかを取得
+            enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
+            
+            enemy = collision.gameObject.GetComponent<Enemy>();
+            if (enemy == null && enemy.IsHitFlag()) return;
+
+            enemyStatus = collision.gameObject.GetComponent<EnemyStatus>();
 
             hitflg = true;
 
             // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
             int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
+            Debug.Log($"damage: {damage}");
             enemyStatus.SetHp(damage);
 
             if (enemyStatus.GetHp() <= 0)
             {
                 if (!enemy.IsHitFlag())
                 {
-                    myEnemy.AddEnemy(enemyinfo.enemyData.GetEnemyType());
+                    myEnemy.AddEnemy(enemyInfo.enemyData.GetEnemyType());
+                    Debug.Log(enemyInfo.enemyData.GetEnemyType());
                     enemy.SetIsHitFlag(true);
                 }
             }

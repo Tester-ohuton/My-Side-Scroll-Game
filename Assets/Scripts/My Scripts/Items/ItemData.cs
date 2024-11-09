@@ -14,8 +14,12 @@ public class ItemData : ScriptableObject
     // ================================
     public enum Type
     {
-        COTTON,
-        SHEET,
+        ITEM_0_ëÂç™,
+        ITEM_1_êÖ,
+        ITEM_2_Ç…Ç⁄Çµ,
+        ITEM_3_îíÇ›Çª,
+        ITEM_4_ì§ïÖ,
+        ITEM_5_ÈQñ›,
 
         MAX_ITEM
     }

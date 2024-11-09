@@ -4,299 +4,156 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public float speed;      //移動速度
-	public float jumpSpeed;  //ジャンプ速度
-	public float gravity;   //重力
-	public GameObject charaobj;     //キャラクターオブジェクト
-	public GameObject camobj;       //カメラオブジェクト
-
-    public bool moving { get; set; }
+    public float speed;      // 移動速度
+    public float jumpSpeed;  // ジャンプ速度
+    public float gravity;    // 重力
+    public GameObject charaobj; // キャラクターオブジェクト
+    public GameObject camobj;   // カメラオブジェクト
+    public LayerMask groundLayer;
 
     public bool stopMoverment = false;
     public bool useGravity;
 
-	private float x;
-    private float y;
-	private int AttackTimer = 0;
+    private float x;
 
-	bool flag = false;
-	bool Attack = false;
+    private Vector3 moveDirection = Vector3.zero;  // 移動方向
 
-    private Vector3 moveDirection = Vector3.zero;  //移動方向
+    private ItemInfo iteminfo;
+    private MyItem myitem;
 
-	private ItemInfo iteminfo;
-	private MyItem myitem;
-    private MyEnemy myEnemy;
-    private Quest_Level_1 quest_Level_1;
-    private GroundCheck3D groundCheck3D;
-    private Rigidbody rb3D;
-
-    CharacterController controller;
-    KnockBack knock;
-
+    Rigidbody rb;
     Animator anime;
 
     // 攻撃モーションで使用
     bool jumpFlag;
     private GameObject scissors1;
 
-    // 放置時間
-    float LeaveTime = 0.0f;
+    // Playerのステータス、操作制御用
+    private KnockBack knockBack;
+    private bool isKnockBackActive;
 
-    int WalkTimer = 0;
+    // 左右反転
+    private Sword sword;
 
-    // Use this for initialization
     void Start()
-	{
-		myitem = GetComponent<MyItem>();
-        myEnemy = GetComponent<MyEnemy>();
-
-        controller = GetComponent<CharacterController>();
-        knock = GetComponent<KnockBack>();
+    {
+        myitem = GetComponent<MyItem>();
+        rb = GetComponent<Rigidbody>();
+        knockBack = GetComponent<KnockBack>();
         anime = GetComponent<Animator>();
-        groundCheck3D = GetComponent<GroundCheck3D>();
-        rb3D = GetComponent<Rigidbody>();
 
-        // コライダー取得
-        scissors1 = GameObject.Find(Const.scissors1);
-        quest_Level_1 = GameObject.Find("Quest").GetComponent<Quest_Level_1>();
+        scissors1 = GameObject.Find("scissors1");
+        sword = scissors1.GetComponentInParent<Sword>();
 
         jumpFlag = false;
-
+        isKnockBackActive = false;
+        moveDirection = Vector3.zero; // 初期化
     }
 
     void Update()
-	{
-        if (anime != null)
+    {
+        if (!isKnockBackActive)
         {
-            // なにもなければ常にIdle状態
-            anime.SetBool("isWalk", false);
-
-            Vector3 effectpos = this.gameObject.transform.position;
-
-            effectpos.x = this.gameObject.transform.position.x - 0.6f;
-            effectpos.y = this.gameObject.transform.position.y - 1.1f;
-
-            // 立ち止まっているとき
-            if (anime.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                // 放置時間が一定時間超えたら
-                LeaveTime += Time.deltaTime;
-                if (LeaveTime > 5.0f)
-                {
-
-                    anime.SetBool("isLeave", true);
-
-                }
-            }
-            // 放置モーションに入ったら放置時間初期化
-            if (anime.GetCurrentAnimatorStateInfo(0).IsName("Doya"))
-            {
-                // 前方向へゆっくり向く
-                Vector3 newDir =
-                    Vector3.RotateTowards(
-                        transform.forward, new Vector3(0, 0, -1),
-                        4.5f * Time.deltaTime, 0.0f);
-                this.transform.rotation = Quaternion.LookRotation(newDir);
-                LeaveTime = 0.0f;
-                anime.SetBool("isLeave", false);
-            }
-
-            // 攻撃モーション管理
-            AttackMotion();
-
-            // 攻撃がヒットしていれば少し浮く
-            if (scissors1.GetComponent<AttackContoroll>().GethitFlg())
-            {
-                moveDirection.y = 1;
-            }
-
-            x = Input.GetAxis(Const.Horizontal);
-            y = Input.GetAxis(Const.Vetical);
-
-            
-            if (groundCheck3D.CheckGroundStatus())
-            {
-                anime.SetBool("isJump", false);
-
-                //moveDirection = new Vector3(0, y, x);
-                //moveDirection = transform.TransformDirection(moveDirection);
-                ////移動速度を掛ける
-                //moveDirection *= speed;
-
-                moveDirection = new Vector3(0, 0, x);
-                moveDirection = transform.TransformDirection(moveDirection);
-                //移動速度を掛ける
-                moveDirection *= speed;
-
-                // ジャンプ
-                // ジャンプアニメが流れていないとき
-                if (Input.GetKeyDown(KeyCode.Space) &&
-                    !anime.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-                {
-                    // ジャンプアニメ
-                    anime.SetBool("isJump", true);
-                    // ジャンプアニメスピード
-                    anime.SetFloat("animSpeed", 2.0f);
-                    // ジャンプ中フラグオン
-                    jumpFlag = true;
-                }
-                // ジャンプアニメ中かつ27%まで進んだら上昇
-                if (anime.GetCurrentAnimatorStateInfo(0).IsName("Jump") &&
-                    anime.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.27 &&
-                    jumpFlag)
-                {
-                    jumpFlag = false;
-                    anime.SetFloat("animSpeed", 0.5f);
-                    //ジャンプボタンが押下された場合、y軸方向への移動を追加する
-                    moveDirection.y = jumpSpeed;
-                }
-
-                // 操作不可でなければ
-                if (!knock.GetIsInoperable())
-                {
-                    if (x > 0)
-                    {
-                        LeaveTime = 0.0f;
-                        anime.SetBool("isWalk", true);
-                        moveDirection.x = Input.GetAxis(Const.Horizontal) * speed;
-                        gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
-                        WalkTimer++;
-                    }
-
-                    if (x < 0)
-                    {
-                        LeaveTime = 0.0f;
-                        anime.SetBool("isWalk", true);
-                        moveDirection.x = Input.GetAxis(Const.Horizontal) * speed;
-                        gameObject.transform.rotation = Quaternion.Euler(0, -90, 0);
-                        WalkTimer++;
-                    }
-                }
-
-            }
-            else  // ジャンプ中の左右移動
-            {
-                moveDirection.x = Input.GetAxis(Const.Horizontal) * (speed / 2);
-                //                                               　 ↑ジャンプ中なので移動力は少なめ
-            }
-            
-
-            
-            if (WalkTimer == 15)
-            {
-                WalkTimer = 0;
-            }
-            
+            HandleMovement();
         }
-
-        Vector3 pos = transform.position;
-        //pos.x = 0.0f;
-        transform.position = pos;
-
-        if (useGravity)
+        else if (jumpFlag && Mathf.Abs(rb.velocity.y) < 0.01f)
         {
-            GravityScale();
+            jumpFlag = false;
+            isKnockBackActive = false; // ノックバック終了
         }
-        else
-        {
-            GravitySmall();
-        }
-
-        //CharacterControllerを移動させる
-        // ノックバック処理の操作不可フラグがオフのとき操作可能
-        if (!knock.GetIsInoperable())
-        {
-            controller.Move(moveDirection * Time.deltaTime);
-        }
-        else
-        {
-            controller.Move(new Vector3(0, moveDirection.y * Time.deltaTime, 0));
-        }
-
-        if (transform.position.z != 0)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0.0f);
-        }
-        
     }
 
     private void FixedUpdate()
     {
-        //animation    
-        bool has_H_Input = !Mathf.Approximately(x, 0);
-
-        if (!stopMoverment) moving = has_H_Input;
-        else moving = false;
-
-        float inputSpeed = Mathf.Clamp01(Mathf.Abs(x));
-
-        anime.SetBool(Const.Moving, moving);
-        anime.SetFloat(Const.Speed, inputSpeed);
+        if (!knockBack.GetIsInoperable())
+        {
+            Vector3 targetPosition = rb.position + moveDirection * Time.fixedDeltaTime;
+            rb.MovePosition(targetPosition);
+        }
     }
 
-    private void GravityScale()
+    void HandleMovement()
     {
-        //重力処理
-        moveDirection.y -= gravity * Time.deltaTime;
+        if (anime != null)
+        {
+            anime.SetBool("isWalk", false);
+
+            AttackMotion();
+
+            x = Input.GetAxis(Const.Horizontal);
+
+            if (x < 0)
+            {
+                sword.LeftSwing();
+            }
+            if (x > 0)
+            {
+                sword.RightSwing();
+            }
+
+            if (x != 0)
+            {
+                moveDirection = new Vector3(x * speed, rb.velocity.y, 0);
+                anime.SetBool("isWalk", true);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            {
+                anime.SetTrigger("Jump");
+                rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
+                jumpFlag = true;
+            }
+
+            if (useGravity)
+                moveDirection.y -= gravity * Time.deltaTime;
+
+            if (Mathf.Abs(rb.velocity.y) < 0.01f)
+            {
+                jumpFlag = false;
+                anime.SetBool("isJump", false);
+            }
+        }
     }
 
-    private void GravitySmall()
+    private bool IsGrounded()
     {
-        //重力無効処理
-        moveDirection.y += gravity * Time.deltaTime;
+        return Physics.Raycast(transform.position, Vector3.down, 1.0f, groundLayer);
     }
 
     private void AttackMotion()
     {
-        // 攻撃１開始
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
         {
-            LeaveTime = 0.0f;
             anime.SetTrigger("Attack");
-        }
-        
-        
-        // 攻撃１か攻撃２か攻撃３が再生中
-        if (anime.GetCurrentAnimatorStateInfo(0).IsName("OverSlash") ||
-            anime.GetCurrentAnimatorStateInfo(0).IsName("UnderSlash") ||
-            anime.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
-        {
-            // はさみの当たり判定オン
-            scissors1.GetComponent<MeshCollider>().enabled = true;
-        }
-        else
-        {
-            // はさみの当たり判定をオフ
-            scissors1.GetComponent<MeshCollider>().enabled = false;
-            // 攻撃ヒット判定用フラグオフ
-            scissors1.GetComponent<AttackContoroll>().SethitFlg(false);
+
+            if (anime.GetCurrentAnimatorStateInfo(0).IsName("OverSlash") ||
+                anime.GetCurrentAnimatorStateInfo(0).IsName("UnderSlash") ||
+                anime.GetCurrentAnimatorStateInfo(0).IsName("Stab"))
+            {
+                scissors1.GetComponent<Collider>().enabled = true;
+            }
+            else
+            {
+                scissors1.GetComponent<Collider>().enabled = false;
+                scissors1.GetComponent<AttackContoroll>().SethitFlg(false);
+            }
         }
     }
 
-	private void OnCollisionEnter(Collision other)
-	{
-		// Itemタグのオブジェクトと接触したらアイテム取得
-		if (other.gameObject.tag == "Item")
-		{
-			iteminfo = other.gameObject.GetComponent<ItemInfo>();
-            // 取得アイテム格納用配列に格納
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Item")
+        {
+            iteminfo = other.gameObject.GetComponent<ItemInfo>();
             myitem.AddItem(iteminfo.itemData.GetItemType());
-
-            // クエストをクリアして
-            StaticEnemy.IsUpdate = true;
-
-            // アイテムを取得したら更新可能
             StaticItem.IsUpdate = true;
-
-            //Debug.Log(iteminfo.itemData.GetItemType());
-            // オブジェクト削除
+            Debug.Log(iteminfo.itemData.GetItemType());
             Destroy(other.gameObject);
-		}
-	}
+        }
+    }
 
-	public Vector3 GetMoveDirection()
-	{
-		return moveDirection;
-	}
+    public Vector3 GetMoveDirection()
+    {
+        return moveDirection;
+    }
 }
