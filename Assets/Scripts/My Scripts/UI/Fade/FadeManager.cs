@@ -80,7 +80,7 @@ public class FadeManager : MonoBehaviour
 				List<string> scenes = new List<string>();
                 scenes.Add("Title");
 				scenes.Add("Choice");
-                scenes.Add("Demo");
+                scenes.Add("Prototype");
                 scenes.Add("Level 1");
 				scenes.Add("Level 2");
 				scenes.Add("Level 3");

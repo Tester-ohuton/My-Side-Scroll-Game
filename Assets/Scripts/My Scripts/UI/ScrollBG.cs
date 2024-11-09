@@ -21,7 +21,7 @@ public class ScrollBG : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("hime_Ani03").GetComponent<Player>();
+        player = GameObject.Find("Actor").GetComponent<Player>();
         image = GetComponent<Image>();
         image.material.mainTextureOffset =
             new Vector2(0, 0);
@@ -32,17 +32,19 @@ public class ScrollBG : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 現在座標と過去座標が違ったら進んでいる
-        if (player.transform.position.x != latepos)
+        if (player != null)
         {
-            // オフセット更新
-            image.material.mainTextureOffset +=
-                new Vector2(
-                    player.GetMoveDirection().x *
-                    Time.deltaTime * 0.01f, 0);
-            // 過去座標更新
-            latepos = player.transform.position.x;
+            // 現在座標と過去座標が違ったら進んでいる
+            if (player.transform.position.x != latepos)
+            {
+                // オフセット更新
+                image.material.mainTextureOffset +=
+                    new Vector2(
+                        player.GetMoveDirection().x *
+                        Time.deltaTime * 0.01f, 0);
+                // 過去座標更新
+                latepos = player.transform.position.x;
+            }
         }
-        
     }
 }

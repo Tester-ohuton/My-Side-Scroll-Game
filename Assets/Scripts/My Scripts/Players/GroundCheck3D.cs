@@ -14,9 +14,4 @@ public class GroundCheck3D : MonoBehaviour
 
     RaycastHit hit;
 
-    public bool CheckGroundStatus()
-    {
-        return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
-    }
-
 }

@@ -1,35 +1,56 @@
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Quest_Level_1 : MonoBehaviour
 {
-    private Dictionary<EnemyData.EnemyType, int> enemyCount;
+    public int clearNum;
+
+    public static UnityEvent OnEnemyDestroyCountEvent = new UnityEvent();
+
+    public static UnityEvent OngameClearEvent = new UnityEvent();
+
+    private int enemyCounter;
+    private bool isGameClear;
 
     void Start()
     {
-        enemyCount = new Dictionary<EnemyData.EnemyType, int>();
+        ResetScore();
 
-        // Initialize enemy count dictionary with all enemy types
-        foreach (EnemyData.EnemyType type in System.Enum.GetValues(typeof(EnemyData.EnemyType)))
+        OnEnemyDestroyCountEvent.AddListener(() =>
         {
-            if (type != EnemyData.EnemyType.MAX_ENEMY)
+            AddScore(1);
+        });
+
+        OngameClearEvent.AddListener(() =>
+        {
+            GameClear();
+        });
+    }
+
+    private void Update()
+    {
+        if (!isGameClear)
+        {
+            if (clearNum <= enemyCounter)
             {
-                enemyCount[type] = 0;
+                OngameClearEvent.Invoke();
+                isGameClear = true;
             }
         }
     }
 
-    public void EnemyEncountered(EnemyData.EnemyType type)
+    private void ResetScore()
     {
-        if (enemyCount.ContainsKey(type))
-        {
-            enemyCount[type]++;
-            Debug.Log(enemyCount[type]);
-        }
+        enemyCounter = 0;
     }
 
-    public int GetEnemyCount(EnemyData.EnemyType type)
+    private void AddScore(int point)
     {
-        return enemyCount.ContainsKey(type) ? enemyCount[type] : 0;
+        enemyCounter += point;
+    }
+
+    public void GameClear()
+    {
+        FadeManager.Instance.LoadScene("Game Clear", 2.0f);   
     }
 }

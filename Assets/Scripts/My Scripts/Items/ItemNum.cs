@@ -19,7 +19,7 @@ public class ItemNum : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myitem = GameObject.Find("hime_Ani03").GetComponent<MyItem>();
+        myitem = GameObject.Find("Actor").GetComponent<MyItem>();
 
         // オブジェクトからTextコンポーネントを取得
         itemNum[0] = DispNum[0].GetComponent<Text>();
