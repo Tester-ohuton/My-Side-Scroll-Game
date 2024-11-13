@@ -321,7 +321,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Jump
+    m_ConditionEvent: isJump
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1713276567982504096}
@@ -843,7 +843,8 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 2846778812164576578}
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: -120, y: 120, z: 0}
   m_ExitPosition: {x: 1230, y: 70, z: 0}
@@ -896,6 +897,18 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &2846778812164576578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66c05ef56d881d4e8c674d4503e1203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1101 &3097443627462496264
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

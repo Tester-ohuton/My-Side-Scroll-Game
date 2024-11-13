@@ -118,3 +118,5 @@ Assets/Scripts/My Scripts/20241110MyEnemy/EnemyBase.cs.meta
 Assets/Scripts/My Scripts/20241110MyEnemy/EnemyBodyAttack.cs.meta
 Assets/Scripts/My Scripts/20241110MyEnemy/EnemyShot.cs.meta
 Assets/Scripts/My Scripts/20241110MyEnemy/StageManager.cs.meta
+.vscode/
+.idea/
