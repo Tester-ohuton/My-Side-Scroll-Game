@@ -245,15 +245,15 @@ GameObject:
   - component: {fileID: 56051831}
   - component: {fileID: 56051830}
   - component: {fileID: 56051829}
+  - component: {fileID: 56051835}
   - component: {fileID: 56051828}
   - component: {fileID: 56051827}
   - component: {fileID: 56051826}
-  - component: {fileID: 56051825}
   - component: {fileID: 56051824}
-  - component: {fileID: 56051835}
+  - component: {fileID: 56051825}
   m_Layer: 7
   m_Name: Actor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -290,10 +290,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpSpeed: 4
-  gravity: 20
+  jumpSpeed: 8
+  gravity: 16
   charaobj: {fileID: 56051823}
   camobj: {fileID: 2075047048}
+  rayLength: 1
+  rayOffset: -0.5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &56051826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +357,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
@@ -2612,7 +2617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTrans: {fileID: 56051834}
-  cameraPos: {x: 0, y: 2, z: -7}
+  cameraPos: {x: 0, y: 3, z: -7}
   cameraRot: {x: 15, y: 0, z: 0}
 --- !u!114 &2075047053
 MonoBehaviour:
