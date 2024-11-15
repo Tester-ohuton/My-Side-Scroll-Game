@@ -94,3 +94,29 @@ Assets/Scripts/My Scripts/Audio/SoundManager.cs.meta
 Assets/Scripts/My Scripts/Players/Sword.cs.meta
 Assets/Scripts/My Scripts/UI/UISway.cs.meta
 Assets/Scenes/3DScene.unity.meta
+Assets/Plugins.meta
+Assets/Plugins/
+Assets/Resources/DOTweenSettings.asset
+Assets/Resources/DOTweenSettings.asset.meta
+Assets/Scripts/My Scripts/20241110MyEnemy.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/AreaManager.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Bear.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Crocodile.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Dog.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Eagle.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Fox.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Jellyfish.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Lion.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Boss_Penguin.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Bee.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Crow.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Frog.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Scorpion.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Snake.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/Enemy_Wolf.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/EnemyBase.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/EnemyBodyAttack.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/EnemyShot.cs.meta
+Assets/Scripts/My Scripts/20241110MyEnemy/StageManager.cs.meta
+.vscode/
+.idea/
