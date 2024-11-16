@@ -50,12 +50,12 @@ public class EnemyShot : MonoBehaviour
     }
 
     // トリガー進入時に呼出
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         string tag = collision.gameObject.tag;
 
         // 命中対象ごとの処理
-        if (tag == "Actor")
+        if (tag == "Player")
         {// アクターに命中
             PlayerStatus playerStatus = collision.gameObject.GetComponent<PlayerStatus>();
             if (playerStatus != null)

@@ -25,11 +25,11 @@ public class EnemyBodyAttack : MonoBehaviour
     }
 
     // トリガー滞在時に呼出
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay(Collider collision)
     {
         string tag = collision.gameObject.tag;
 
-        if (tag == "Actor")
+        if (tag == "Player")
         {// アクターと接触
             enemyBase.BodyAttack(collision.gameObject); // アクターに接触ダメージを与える
         }

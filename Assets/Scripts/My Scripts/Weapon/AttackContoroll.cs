@@ -41,11 +41,13 @@ public class AttackContoroll : MonoBehaviour
 		}
 	}
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter(Collider collision)
     {
         // オブジェクトタグがEnemyのとき
-        if (!hitflg && collision.CompareTag("Enemy"))
+        if (!hitflg && collision.tag == "Enemy")
         {
+            Debug.Log("武器が敵に当たった!");
+
             if (se != null)
             {
                 // 攻撃ヒット音

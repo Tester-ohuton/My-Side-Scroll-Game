@@ -31,12 +31,15 @@ public class TargetPlayer : MonoBehaviour
 
     void Update()
     {
-        // ２点間の距離を求める
-        distance = Vector3.Distance(transform.position, playerPos.transform.position);
-        
+        if (playerPos)
+        {
+            // ２点間の距離を求める
+            distance = Vector3.Distance(transform.position, playerPos.transform.position);
 
-        vec = playerPos.transform.position - this.transform.position;
-        vec = vec.normalized;
+
+            vec = playerPos.transform.position - this.transform.position;
+            vec = vec.normalized;
+        }
 
         // 2点間の距離が値以下だったらプレイヤーに向かって移動
         if (distance <= range)

@@ -37,7 +37,6 @@ public class Enemy_Bee : EnemyBase
     [SerializeField] private Vector3 BackDir;
 
     // 各種変数
-    private float time; // 経過時間
     private Vector3 initPos;// 初期座標
     private Transform thistrans;
     private Vector3 pos;
@@ -45,6 +44,9 @@ public class Enemy_Bee : EnemyBase
 
     // 定数定義
     private const float FlyAnimationSpan = 0.3f; // 飛行アニメーションのスプライト切り替え時間
+
+    // 歩く範囲(ゲーム開始時のスポーン位置を起点)
+    private float walkRange = 3.0f;
 
     private GameObject playerObj;
     private Player player;
@@ -61,9 +63,6 @@ public class Enemy_Bee : EnemyBase
         status = this.transform.GetChild(0).GetComponent<EnemyStatus>();
 
         animator = GetComponent<Animator>();
-        
-        //- 変数初期化
-        time = 0.0f;
 
         // 初期位置取得
         initPos = this.transform.position;
@@ -113,15 +112,20 @@ public class Enemy_Bee : EnemyBase
         switch (curMode)
         {
             case Enemy04Mode.WALK:
+
+                // 上端に行ったら下へ方向転換
+                if (thistrans.position.y > initPos.y + walkRange)
+                {
+                    dir = -1;
+                }
+                // 下端に行ったら上へ方向転換
+                if (thistrans.position.y < 0)
+                {
+                    dir = 1;
+                }
+
                 // 上下移動
-                // 時間経過
-                time += Time.deltaTime;
-                // 移動ベクトル計算
-                Vector3 vec;
-                vec = new Vector3((Mathf.Sin(time / movingTime) + 1.0f) * movingSpeed, 0.0f, 0.0f);
-                vec = Quaternion.Euler(0, 0, 90) * vec;
-                // 移動適用
-                rb.MovePosition(initPos + vec);
+                pos.y += dir * Time.deltaTime;
 
                 break;
 
