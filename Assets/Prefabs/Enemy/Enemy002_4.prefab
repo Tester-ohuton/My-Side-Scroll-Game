@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 832070183379750498}
   - component: {fileID: 8044700798066353164}
   - component: {fileID: 4195052727636157248}
+  - component: {fileID: 7013899623306895059}
   m_Layer: 0
   m_Name: Enemy002_4
   m_TagString: Enemy
@@ -99,6 +100,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sum: 1
   enemyId: 0
+--- !u!114 &7013899623306895059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083785137610808443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc3b08de9ce6014e9c2261a2cdacf2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areaManager: {fileID: 0}
+  sprite_Defeat: {fileID: 0}
+  maxHP: 50
+  touchDamage: 0
+  isBoss: 0
+  bossDefeatParticlePrefab: {fileID: 0}
+  nowHP: 0
+  isDamaged: 0
+  isDead: 0
+  isVanishing: 0
+  isInvis: 0
+  rightFacing: 0
+  curMode: 0
+  initialMode: 0
+  preMode: 0
+  movingTime: 1
+  movingSpeed: 1
+  dir: 1
+  BackDir: {x: 0, y: 0, z: 0}
 --- !u!1 &8574979711189763061
 GameObject:
   m_ObjectHideFlags: 0
