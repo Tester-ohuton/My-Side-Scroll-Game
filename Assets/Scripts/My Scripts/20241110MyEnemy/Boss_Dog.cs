@@ -54,32 +54,13 @@ public class Boss_Dog : EnemyBase
         if (isVanishing)
             return;
 
-        // 表示スプライト変更
-        // 接地判定取得
-        ContactPoint2D[] contactPoints = new ContactPoint2D[2];
-        rb2D.GetContacts(contactPoints);
-        bool isGround = contactPoints[1].enabled;
-        // スプライト反映
-        if (!isGround)
-        {// ジャンプ中
-            spriteRenderer.sprite = sprite_Jump;
-        }
-        else if (Mathf.Abs(rb2D.velocity.x) >= 0.1f)
-        {// 横移動中
-            spriteRenderer.sprite = sprite_Move;
-        }
-        else
-        {// 待機中
-            spriteRenderer.sprite = sprite_Wait;
-        }
-
         // 攻撃間隔処理
         nextAttackTime -= Time.deltaTime;
         if (nextAttackTime > 0.0f)
             return;
         nextAttackTime = attackInterval;
         // 一度でも攻撃したら重力加速度を下げる
-        rb2D.gravityScale = 0.5f;
+        rb.useGravity = false;
 
         // 攻撃開始
         Vector2 velocity = new Vector2(); // 速度
@@ -106,6 +87,6 @@ public class Boss_Dog : EnemyBase
         }
 
         // 速度を反映
-        rb2D.velocity = velocity;
+        rb.velocity = velocity;
     }
 }

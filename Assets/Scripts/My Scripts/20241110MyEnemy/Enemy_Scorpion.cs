@@ -12,23 +12,18 @@ public class Enemy_Scorpion : EnemyBase
     // オブジェクト・コンポーネント
     public GameObject tornadoBulletPrefab; // 竜巻弾プレハブ
 
-    // 画像素材
-    [SerializeField] private List<Sprite> spriteList = null; // 攻撃アニメーション
-
     // 設定項目
     [Header("攻撃間隔")]
     public float attackInterval;
 
     // 各種変数
     private float timeCount;
-    private float nextActionTime;
 
     // Start
     void Start()
     {
         // 変数初期化
         timeCount = -1.0f;
-        nextActionTime = attackInterval;
     }
 
     // Update
@@ -50,10 +45,7 @@ public class Enemy_Scorpion : EnemyBase
 
         // 時間経過
         timeCount += Time.deltaTime;
-        // スプライト適用
-        int animationFrame = (int)(timeCount * spriteList.Count / attackInterval);
-        animationFrame = Mathf.Clamp(animationFrame, 0, spriteList.Count - 1);
-        spriteRenderer.sprite = spriteList[animationFrame];
+        
         // まだ行動タイミングでない場合は処理終了
         if (timeCount < attackInterval)
             return;

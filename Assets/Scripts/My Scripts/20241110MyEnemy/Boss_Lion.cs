@@ -10,13 +10,6 @@ using DG.Tweening;
 /// </summary>
 public class Boss_Lion : EnemyBase
 {
-    // 画像素材
-    [Header("画像素材")]
-    [SerializeField] private Sprite[] spriteList_Move = null; // 移動アニメーション
-    [SerializeField] private Sprite[] spriteList_MoveAnger = null; // 移動(怒)アニメーション
-    [SerializeField] private Sprite[] spriteList_Roll = null; // 回転アニメーション
-    [SerializeField] private Sprite sprite_Anger = null; // 怒り
-
     // 設定項目
     [Header("移動速度")]
     public float movingSpeed;
@@ -69,7 +62,7 @@ public class Boss_Lion : EnemyBase
         // 消滅中なら処理しない
         if (isVanishing)
         {
-            rb2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             transform.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
             return;
         }
@@ -80,7 +73,7 @@ public class Boss_Lion : EnemyBase
             isAnger = true;
             nowMode = ActionMode.Anger;
             timeCount = 0.0f;
-            rb2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
 
             // アクターとの位置関係から向きを決定
             if (transform.position.x > actorTransform.position.x)
@@ -107,17 +100,8 @@ public class Boss_Lion : EnemyBase
                     xSpeed = movingSpeed_Anger;
                 if (!rightFacing)
                     xSpeed *= -1.0f;
-                rb2D.velocity = new Vector2(xSpeed, rb2D.velocity.y);
+                rb.velocity = new Vector2(xSpeed, rb.velocity.y);
 
-                // スプライト適用
-                animationFrame = (int)(timeCount * 2.0f);
-                animationFrame %= spriteList_Move.Length;
-                if (animationFrame < 0)
-                    animationFrame = 0;
-                if (!isAnger)
-                    spriteRenderer.sprite = spriteList_Move[animationFrame];
-                else
-                    spriteRenderer.sprite = spriteList_MoveAnger[animationFrame];
                 // 次モード切替
                 if (timeCount >= movingTime)
                 {
@@ -130,17 +114,12 @@ public class Boss_Lion : EnemyBase
                         startVelocity = rollSpeed_Anger;
                     if (!rightFacing)
                         startVelocity.x *= -1.0f;
-                    rb2D.velocity = startVelocity;
+                    rb.velocity = startVelocity;
                 }
                 break;
 
             case ActionMode.Roll: // 回転中
-                                  // スプライト適用
-                animationFrame = (int)(timeCount * 6.0f);
-                animationFrame %= spriteList_Roll.Length;
-                if (animationFrame < 0)
-                    animationFrame = 0;
-                spriteRenderer.sprite = spriteList_Roll[animationFrame];
+                
                 // 次モード切替
                 if (timeCount >= rollTime)
                 {
@@ -150,8 +129,7 @@ public class Boss_Lion : EnemyBase
                 break;
 
             case ActionMode.Anger: // 怒りモーション中
-                                   // スプライト適用
-                spriteRenderer.sprite = sprite_Anger;
+                
                 // 次モード切替
                 if (timeCount >= angerTime)
                 {
@@ -179,7 +157,7 @@ public class Boss_Lion : EnemyBase
             return;
 
         // 壁にぶつかったら向き変更(回転中なら再加速)
-        Vector2 velocity = rb2D.velocity;
+        Vector2 velocity = rb.velocity;
         if (rightFacing && CheckRaycastToWall(Vector2.right))
         {// 右の壁にぶつかった
             SetFacingRight(false);
@@ -190,7 +168,7 @@ public class Boss_Lion : EnemyBase
                     velocity.x = -rollSpeed.x;
                 else
                     velocity.x = -rollSpeed_Anger.x;
-                rb2D.velocity = velocity;
+                rb.velocity = velocity;
             }
         }// 左の壁にぶつかった
         else if (!rightFacing && CheckRaycastToWall(Vector2.left))
@@ -203,7 +181,7 @@ public class Boss_Lion : EnemyBase
                     velocity.x = rollSpeed.x;
                 else
                     velocity.x = rollSpeed_Anger.x;
-                rb2D.velocity = velocity;
+                rb.velocity = velocity;
             }
         }
     }

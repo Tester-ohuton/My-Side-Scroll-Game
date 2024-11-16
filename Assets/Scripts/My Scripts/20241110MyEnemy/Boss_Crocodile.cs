@@ -10,13 +10,6 @@ using DG.Tweening;
 /// </summary>
 public class Boss_Crocodile : EnemyBase
 {
-    // 画像素材
-    [Header("画像素材")]
-    [SerializeField] private Sprite sprite_Wait = null; // 待機
-    [SerializeField] private Sprite sprite_OneArm = null; // 片手撃ち
-    [SerializeField] private Sprite sprite_TwoArms = null; // 両手撃ち
-    [SerializeField] private Sprite sprite_Anger = null; // 怒り
-
     // 弾丸プレハブリスト
     [Header("エネミー弾丸プレハブリスト(色別)")]
     public List<GameObject> bulletPrefabs;
@@ -69,9 +62,6 @@ public class Boss_Crocodile : EnemyBase
         // まだ行動タイミングでない場合
         if (timeCount < nextActionTime)
         {
-            // 攻撃から0.5秒以上経過ならスプライトを待機状態に戻す
-            if (timeCount >= 0.5f)
-                spriteRenderer.sprite = sprite_Wait;
             // 処理終了
             return;
         }
@@ -85,29 +75,21 @@ public class Boss_Crocodile : EnemyBase
             case ActionMode.Shot_A:
                 // 射撃
                 ShotBullet_ToActor();
-                // スプライト適用
-                spriteRenderer.sprite = sprite_OneArm;
                 break;
 
             case ActionMode.Shot_B:
                 // 射撃
                 ShotBullet_ToActor3Way();
-                // スプライト適用
-                spriteRenderer.sprite = sprite_OneArm;
                 break;
 
             case ActionMode.Shot_C:
                 // 射撃
                 ShotBullet_Random();
-                // スプライト適用
-                spriteRenderer.sprite = sprite_TwoArms;
                 break;
 
             case ActionMode.Shot_D:
                 // 射撃
                 ShotBullet_ActorPierce();
-                // スプライト適用
-                spriteRenderer.sprite = sprite_Anger;
                 break;
         }
         // パターン切り替え
