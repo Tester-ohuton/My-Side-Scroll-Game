@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f922d456252be1418569e1ecde6c983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHitFlag: 0
+  enemyPrefab: {fileID: 1879258593316586055}
   isdead: 0
 --- !u!136 &4131578019433244454
 CapsuleCollider:

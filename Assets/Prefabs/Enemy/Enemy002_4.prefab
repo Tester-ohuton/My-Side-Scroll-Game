@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4195052727636157248}
   - component: {fileID: 7013899623306895059}
   - component: {fileID: 6776384648423332913}
-  - component: {fileID: 466757599601331993}
   m_Layer: 0
   m_Name: Enemy002_4
   m_TagString: Enemy
@@ -76,7 +75,7 @@ Animator:
   m_GameObject: {fileID: 5083785137610808443}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 01d478f3e6d2f6044b3f333f0a8c4dfe, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -153,29 +152,6 @@ MonoBehaviour:
   isVanishing: 0
   isInvis: 0
   rightFacing: 0
---- !u!136 &466757599601331993
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5083785137610808443}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8574979711189763061
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f922d456252be1418569e1ecde6c983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHitFlag: 0
+  enemyPrefab: {fileID: 5083785137610808443}
   isdead: 0
 --- !u!1001 &3994699905883112504
 PrefabInstance:
@@ -374,6 +350,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3347210186400160836}
     m_Modifications:
+    - target: {fileID: 294329546166334509, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
