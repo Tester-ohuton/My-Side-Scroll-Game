@@ -9,13 +9,6 @@ using UnityEngine;
 /// </summary>
 public class Boss_Penguin : EnemyBase
 {
-    // 画像素材
-    [Header("画像素材")]
-    [SerializeField] private Sprite[] spriteList_Walk = null; // 歩行アニメーション
-    [SerializeField] private Sprite sprite_Skating = null; // 滑り
-    [SerializeField] private Sprite sprite_Charge = null; // チャージ
-    [SerializeField] private Sprite sprite_Splash = null; // 弾拡散攻撃
-
     // 弾丸プレハブ
     [Header("エネミー弾丸プレハブ")]
     public GameObject bulletPrefab;
@@ -56,8 +49,8 @@ public class Boss_Penguin : EnemyBase
         // 消滅中なら処理しない
         if (isVanishing)
         {
-            rb2D.velocity = Vector2.zero;
-            rb2D.bodyType = RigidbodyType2D.Kinematic;
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
             return;
         }
 
@@ -78,7 +71,7 @@ public class Boss_Penguin : EnemyBase
             {// 右向き
                 SetFacingRight(true);
             }
-            rb2D.velocity += new Vector2(xSpeed * Time.deltaTime, 0.0f);
+            rb.velocity += new Vector3(xSpeed * Time.deltaTime, 0.0f,0f);
 
             // 滑り移行
             if (movingCount >= movingTime)
@@ -86,13 +79,6 @@ public class Boss_Penguin : EnemyBase
                 movingCount = -1.0f;
                 skatingCount = 0.0f;
             }
-
-            // 歩行アニメーション
-            int animationFrame = (int)(movingCount * 4.0f);
-            animationFrame %= spriteList_Walk.Length;
-            if (animationFrame < 0)
-                animationFrame = 0;
-            spriteRenderer.sprite = spriteList_Walk[animationFrame];
         }
         // 滑り中処理
         else if (skatingCount > -1.0f)
@@ -105,8 +91,6 @@ public class Boss_Penguin : EnemyBase
                 skatingCount = -1.0f;
                 chargeCount = 0.0f;
             }
-            // スプライト適用
-            spriteRenderer.sprite = sprite_Skating;
         }
         // チャージ中処理
         else if (chargeCount > -1.0f)
@@ -114,7 +98,7 @@ public class Boss_Penguin : EnemyBase
             chargeCount += Time.fixedDeltaTime;
 
             // 移動停止
-            rb2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
 
             // チャージ移行
             if (chargeCount >= chargeTime)
@@ -124,8 +108,6 @@ public class Boss_Penguin : EnemyBase
                 // 射撃
                 ShotBullet_Splash();
             }
-            // スプライト適用
-            spriteRenderer.sprite = sprite_Charge;
         }
         // 攻撃演出中処理
         else if (attackingCount > -1.0f)
@@ -138,8 +120,6 @@ public class Boss_Penguin : EnemyBase
                 attackingCount = -1.0f;
                 movingCount = 0.0f;
             }
-            // スプライト適用
-            spriteRenderer.sprite = sprite_Splash;
         }
     }
 

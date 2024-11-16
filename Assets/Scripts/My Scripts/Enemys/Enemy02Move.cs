@@ -68,7 +68,7 @@ public class Enemy02Move : MonoBehaviour
         player = playerObj.GetComponent<Player>();
 
         dir = 1;
-        transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
+        //transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
 
         // はさみ
         scissors = GameObject.Find("scissors1");
@@ -125,7 +125,7 @@ public class Enemy02Move : MonoBehaviour
                 {
                     dir = 1;
                 }
-                transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
 
                 // プレイヤーが視認範囲にいるか
                 ObakeSearch(dir);
@@ -141,7 +141,7 @@ public class Enemy02Move : MonoBehaviour
             case Enemy02Mode.BACK:
                 // 初期位置へ戻る方向を取得
                 newDir = new Vector3((initPos.x - thistrans.position.x), (initPos.y - thistrans.position.y), 0).normalized;
-                transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
 
                 // プレイヤーが視認範囲にいるか
                 ObakeSearch(newDir.x);
@@ -169,7 +169,7 @@ public class Enemy02Move : MonoBehaviour
                 newDir = new Vector3(
                     (player.transform.position.x - thistrans.position.x),
                     (player.transform.position.y + 3.0f - thistrans.position.y), 0).normalized;
-                transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
 
                 // 追跡アニメ開始(発見→歩き)
                 animator.SetBool("isChase", true);
@@ -271,7 +271,7 @@ public class Enemy02Move : MonoBehaviour
             case Enemy02Mode.PLAYER_DIE:
                 // 初期位置へ戻る方向を取得
                 newDir = new Vector3((initPos.x - thistrans.position.x), (initPos.y - thistrans.position.y), 0).normalized;
-                transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(newDir.x, 0, 0));
 
                 // 方向を保持させる
                 dir = newDir.x;

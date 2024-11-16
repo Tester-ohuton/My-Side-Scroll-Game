@@ -11,18 +11,15 @@ public class EnemyBase : MonoBehaviour
 {
     // オブジェクト・コンポーネント
     [HideInInspector] public AreaManager areaManager; // エリアマネージャ
-    protected Rigidbody2D rb2D; // RigidBody2D
-    protected SpriteRenderer spriteRenderer;// 敵スプライト
+    protected Rigidbody rb; // Rigidbody/
     protected Transform actorTransform; // 主人公(アクター)のTransform
     protected Image bossHPGage; // ボス用HPゲージ
-
-    // 画像素材
-    public Sprite sprite_Defeat; // 被撃破時スプライト(あれば)
+    protected EnemyStatus enemyStatus;
 
     // 各種変数
     // 基礎データ(インスペクタから入力)
     [Header("最大体力(初期体力)")]
-    public int maxHP;
+    protected int maxHP;
     [Header("接触時アクターへのダメージ")]
     public int touchDamage;
     [Header("ボス敵フラグ(ONでボス敵として扱う。１ステージに１体のみ)")]
@@ -70,12 +67,13 @@ public class EnemyBase : MonoBehaviour
         // 参照取得
         areaManager = _areaManager;
         actorTransform = areaManager.stageManager.player.transform;
-        rb2D = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody>();
+
+        enemyStatus = this.transform.GetChild(0).GetComponent<EnemyStatus>();
 
         // 変数初期化
-        rb2D.freezeRotation = true;
-        nowHP = maxHP;
+        rb.freezeRotation = true;
+        nowHP = maxHP = enemyStatus.GetHp();
         if (transform.localScale.x > 0.0f)
             rightFacing = true;
 
@@ -128,18 +126,9 @@ public class EnemyBase : MonoBehaviour
             // 消滅中フラグをセット
             isVanishing = true;
             // 消滅中は物理演算なし
-            rb2D.velocity = Vector2.zero;
-            rb2D.bodyType = RigidbodyType2D.Kinematic;
-            // 点滅後に消滅処理を呼び出す(DoTween使用)
-            spriteRenderer.DOFade(0.0f, 0.15f) // 0.15秒*ループ回数分の再生時間
-                .SetEase(Ease.Linear)          // 変化の仕方を指定
-                .SetLoops(7, LoopType.Yoyo)    // 7回ループ再生(偶数回は逆再生)
-                .OnComplete(Vanish);   // 再生が終わったらVanish()を呼び出す設定
-
-            // 被撃破時スプライトがあれば表示
-            if (sprite_Defeat != null)
-                spriteRenderer.sprite = sprite_Defeat;
-
+            rb.velocity = Vector3.zero;
+            rb.isKinematic = true;
+            
             // その他撃破時処理
             if (isBoss)
             {// ボス撃破時
@@ -160,12 +149,7 @@ public class EnemyBase : MonoBehaviour
                 damageTween.Kill();
             damageTween = null;
             // 被ダメージ演出再生
-            // (一瞬だけスプライトを赤色に変更する)
-            if (!isInvis)
-            {
-                spriteRenderer.color = COL_DAMAGED; // 赤色に変更
-                damageTween = spriteRenderer.DOColor(COL_DEFAULT, 1.0f);   // DoTweenで徐々に戻す
-            }
+
         }
 
         return true;
@@ -175,17 +159,6 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     private void Vanish()
     {
-        // ドロップアイテム発生確認
-        const int ItemDropRatio = 26; // アイテムドロップ率(%)
-        if (Random.Range(0, 100) < ItemDropRatio && !isBoss)
-        {// アイテムドロップする
-         // ドロップするアイテムの種類を決定
-            int dropItemType = Random.Range(0, areaManager.stageManager.dropItemPrefabs.Length);
-            // アイテム出現
-            GameObject obj = Instantiate(areaManager.stageManager.dropItemPrefabs[dropItemType]);
-            obj.transform.position = transform.position;
-        }
-
         // オブジェクト消滅
         Destroy(gameObject);
     }
@@ -214,17 +187,20 @@ public class EnemyBase : MonoBehaviour
     /// <param name="isRight">右向きフラグ</param>
     public void SetFacingRight(bool isRight)
     {
+        // キャラクターの向き制御
+        Vector2 lscale = gameObject.transform.localScale;
+
         if (!isRight)
         {// 左向き
-         // スプライトを通常の向きで表示
-            spriteRenderer.flipX = false;
+            lscale.x *= -1;
+
             // 右向きフラグoff
             rightFacing = false;
         }
         else
         {// 右向き
-         // スプライトを左右反転した向きで表示
-            spriteRenderer.flipX = true;
+            lscale.x *= 1;
+
             // 右向きフラグon
             rightFacing = true;
         }

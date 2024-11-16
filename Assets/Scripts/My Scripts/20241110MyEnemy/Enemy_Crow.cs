@@ -9,19 +9,13 @@ using UnityEngine;
 /// </summary>
 public class Enemy_Crow : EnemyBase
 {
-    // 画像素材
-    [SerializeField] private Sprite[] spriteList_Move = null; // 移動アニメーション
-
     // 設定項目
     [Header("移動速度")]
     public float movingSpeed;
 
     // 各種変数
-    private float moveAnimationTime; // 移動アニメーション経過時間
-    private int moveAnimationFrame; // 移動アニメーションの現在のコマ番号
     private float previousPositionX; // 前回フレームのX座標
-    private bool initialFrame = true;// 初期1回分の物理フレーム
-
+    
     // 定数定義
     private const float MoveAnimationSpan = 0.3f; // 移動アニメーションのスプライト切り替え時間
 
@@ -31,39 +25,15 @@ public class Enemy_Crow : EnemyBase
         // 消滅中なら処理しない
         if (isVanishing)
             return;
-
-        // 移動アニメーション時間を経過
-        moveAnimationTime += Time.deltaTime;
-        // 移動アニメーションコマ数を計算
-        if (moveAnimationTime >= MoveAnimationSpan)
-        {
-            moveAnimationTime -= MoveAnimationSpan;
-            // コマ数を増加
-            moveAnimationFrame++;
-            // コマ数が歩行アニメーション枚数を越えているなら0に戻す
-            if (moveAnimationFrame >= spriteList_Move.Length)
-                moveAnimationFrame = 0;
-        }
-
-        // 移動アニメーション更新
-        spriteRenderer.sprite = spriteList_Move[moveAnimationFrame];
     }
 
     // FixedUpdate
     void FixedUpdate()
     {
-        // 初回1物理フレーム分は移動処理しない
-        if (initialFrame)
-        {
-            initialFrame = false;
-            previousPositionX = transform.position.x; // 現在のX座標のみ記憶
-            return;
-        }
-
         // 消滅中なら移動しない
         if (isVanishing)
         {
-            rb2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             return;
         }
 
@@ -83,6 +53,6 @@ public class Enemy_Crow : EnemyBase
         float xSpeed = movingSpeed;
         if (!rightFacing)
             xSpeed *= -1.0f;
-        rb2D.velocity = new Vector2(xSpeed, 0.0f);
+        rb.velocity = new Vector2(xSpeed, 0.0f);
     }
 }

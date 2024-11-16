@@ -82,16 +82,10 @@ public class Boss_Jellyfish : EnemyBase
         {
             case ActionMode.Moving: // 移動中
                                     // アクターに向かって移動
-                Vector2 calcVec = actorTransform.position - transform.position;
+                Vector3 calcVec = actorTransform.position - transform.position;
                 calcVec *= 0.2f * Time.deltaTime * movingSpeed;
-                rb2D.velocity += calcVec;
+                rb.velocity += calcVec;
 
-                // スプライト適用
-                int animationFrame = (int)(timeCount * 2.0f);
-                animationFrame %= spriteList_Move.Length;
-                if (animationFrame < 0)
-                    animationFrame = 0;
-                spriteRenderer.sprite = spriteList_Move[animationFrame];
                 // 次モード切替
                 if (timeCount >= movingTime)
                 {
@@ -102,10 +96,8 @@ public class Boss_Jellyfish : EnemyBase
 
             case ActionMode.Charge: // チャージ中
                                     // 減速
-                rb2D.velocity *= Time.deltaTime;
+                rb.velocity *= Time.deltaTime;
 
-                // スプライト適用
-                spriteRenderer.sprite = sprite_Charge;
                 // 次モード切替
                 if (timeCount >= chargeTime)
                 {
@@ -117,8 +109,7 @@ public class Boss_Jellyfish : EnemyBase
                 break;
 
             case ActionMode.Attacking: // 攻撃中
-                                       // スプライト適用
-                spriteRenderer.sprite = sprite_Spread;
+                
                 // 次モード切替
                 if (timeCount >= attackingTime)
                 {

@@ -9,13 +9,6 @@ using UnityEngine;
 /// </summary>
 public class Boss_Bear : EnemyBase
 {
-    // 画像素材
-    [Header("画像素材")]
-    [SerializeField] private Sprite[] spriteList_Walk = null; // 歩行アニメーション
-    [SerializeField] private Sprite[] spriteList_Climb = null; // 壁登りアニメーション
-    [SerializeField] private Sprite sprite_Jump = null; // ジャンプ時
-    [SerializeField] private Sprite sprite_Land = null; // 着地時
-
     // 弾丸プレハブ
     [Header("エネミー弾丸プレハブ")]
     public GameObject bulletPrefab;
@@ -60,8 +53,8 @@ public class Boss_Bear : EnemyBase
         // 消滅中なら処理しない
         if (isVanishing)
         {
-            rb2D.velocity = Vector2.zero;
-            rb2D.bodyType = RigidbodyType2D.Kinematic;
+            rb.velocity = Vector2.zero;
+            rb.isKinematic = true;
             return;
         }
 
@@ -71,11 +64,7 @@ public class Boss_Bear : EnemyBase
             climbCount += Time.fixedDeltaTime;
             // 縦移動
             float ySpeed = climbSpeed;
-            rb2D.velocity = new Vector2(rb2D.velocity.x, ySpeed);
-            // 壁登りアニメーション
-            int animationFrame = (int)(climbCount * 3.0f);
-            animationFrame %= spriteList_Climb.Length;
-            spriteRenderer.sprite = spriteList_Climb[animationFrame];
+            rb.velocity = new Vector2(rb.velocity.x, ySpeed);
 
             // ジャンプ処理
             if (climbCount >= climbTime)
@@ -88,7 +77,7 @@ public class Boss_Bear : EnemyBase
                 Vector2 jumpVec = jumpPower;
                 if (!rightFacing)
                     jumpVec.x *= -1.0f;
-                rb2D.velocity = jumpVec;
+                rb.velocity = jumpVec;
             }
         }
         // 横移動処理
@@ -98,12 +87,12 @@ public class Boss_Bear : EnemyBase
 
             // 壁にぶつかったら向き変更・壁登り
             bool isStartClimb = false;
-            if (rightFacing && rb2D.velocity.x <= 0.0f)
+            if (rightFacing && rb.velocity.x <= 0.0f)
             {
                 SetFacingRight(false);
                 isStartClimb = true;
             }
-            else if (!rightFacing && rb2D.velocity.x >= 0.0f)
+            else if (!rightFacing && rb.velocity.x >= 0.0f)
             {
                 SetFacingRight(true);
                 isStartClimb = true;
@@ -120,13 +109,7 @@ public class Boss_Bear : EnemyBase
             float xSpeed = movingSpeed;
             if (!rightFacing)
                 xSpeed *= -1.0f;
-            rb2D.velocity = new Vector2(xSpeed, rb2D.velocity.y);
-            // 歩行アニメーション
-            int animationFrame = (int)(walkCount * 3.0f);
-            animationFrame %= spriteList_Walk.Length;
-            if (animationFrame < 0)
-                animationFrame = 0;
-            spriteRenderer.sprite = spriteList_Walk[animationFrame];
+            rb.velocity = new Vector2(xSpeed, rb.velocity.y);
         }
         // ジャンプ中処理
         else if (jumpCount > -1.0f)
@@ -136,19 +119,17 @@ public class Boss_Bear : EnemyBase
             // 落下中判定
             if (!isFalling)
             {
-                if (rb2D.velocity.y < -Mathf.Epsilon)
+                if (rb.velocity.y < -Mathf.Epsilon)
                     isFalling = true;
             }
             // 着地移行
-            else if (isFalling && rb2D.velocity.y >= -0.01f)
+            else if (isFalling && rb.velocity.y >= -0.01f)
             {
                 jumpCount = -1.0f;
                 landCount = 0.0f;
                 // 射撃処理
                 ShotBullet_TwoSideOnGround();
             }
-            // ジャンプスプライト
-            spriteRenderer.sprite = sprite_Jump;
         }
         // 着地中処理
         else if (landCount > -1.0f)
@@ -156,15 +137,13 @@ public class Boss_Bear : EnemyBase
             landCount += Time.fixedDeltaTime;
 
             // 移動停止
-            rb2D.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             // 横移動移行
             if (landCount >= landTime)
             {
                 landCount = -1.0f;
                 walkCount = 0.0f;
             }
-            // 着地スプライト
-            spriteRenderer.sprite = sprite_Land;
         }
     }
 

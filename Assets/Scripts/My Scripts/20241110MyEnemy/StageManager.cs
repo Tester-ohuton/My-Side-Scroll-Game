@@ -19,9 +19,6 @@ public class StageManager : MonoBehaviour
     [Header("ボス戦用BGMのAudioClip")]
     public AudioClip bossBGMClip;
 
-    [Header("ザコ敵がドロップするアイテムのプレハブリスト")]
-    public GameObject[] dropItemPrefabs;
-
     // ステージ内の全エリアの配列(Startで取得)
     private AreaManager[] inStageAreas;
 

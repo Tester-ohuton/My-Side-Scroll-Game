@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -224,6 +225,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator Attack()
+    {
+        // ‚Í‚³‚İ‚Ì“–‚½‚è”»’èƒIƒ“
+        scissors1.GetComponent<Collider>().enabled = true;
+
+        yield return new WaitForSeconds(1.5f);
+
+        // ‚Í‚³‚İ‚Ì“–‚½‚è”»’èƒIƒ“
+        scissors1.GetComponent<Collider>().enabled = false;
+    }
+
     private void AttackMotion()
     {
         // UŒ‚‚PŠJn
@@ -231,6 +243,8 @@ public class Player : MonoBehaviour
         {
             LeaveTime = 0.0f;
             anime.SetTrigger("Attack");
+
+            StartCoroutine(Attack());
         }
 
         // UŒ‚‚P‚©UŒ‚‚Q‚©UŒ‚‚R‚ªÄ¶’†

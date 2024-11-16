@@ -19,7 +19,7 @@ public class KnockBack : MonoBehaviour
     EnemyStatus enemyStatus;
 
     //CharacterController controller;
-    Rigidbody2D rb2D;
+    Rigidbody rb;
 
     // 操作不可時間
     float inoperableTime = 1.0f;
@@ -30,8 +30,6 @@ public class KnockBack : MonoBehaviour
     // --- 点滅用 ---
     // 子のRendererの配列
     Renderer[] childrenRenderer;
-
-    SpriteRenderer spriteRenderer;
 
     // 今childRendererが有効か無効化のフラグ
     bool isEnabledRenderers;
@@ -70,10 +68,9 @@ public class KnockBack : MonoBehaviour
         invincibleTime = flickerDuration;
 
         playerStatus = GetComponent<PlayerStatus>();
-        rb2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         childrenRenderer = GetComponentsInChildren<Renderer>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         anime = GetComponent<Animator>();
 
@@ -118,8 +115,6 @@ public class KnockBack : MonoBehaviour
 
             // プレイヤー仰け反る（ヒットストップ？）
             case 1:
-
-                spriteRenderer.color = new Color(0.5f, 0, 0, 1f);
 
                 // レイヤーをInvisibleに変更(当たり判定をなくす)
                 this.gameObject.layer = LayerMask.NameToLayer("Invisible");
@@ -240,8 +235,6 @@ public class KnockBack : MonoBehaviour
 
             if (flickerDuration <= flickerTotalElapsedTime)
             {
-                spriteRenderer.color = new Color(1, 1, 1, 1);
-
                 //ここが被ダメージ点滅の終了時の処理。
                 isDamaged = false;
 
@@ -265,7 +258,7 @@ public class KnockBack : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "Enemy" && !isStart)
         {
@@ -291,8 +284,8 @@ public class KnockBack : MonoBehaviour
     private void Knock(float knockX)
     {
         // ノックバックの力をRigidbodyに加える
-        rb2D.velocity = Vector2.zero; // 現在の速度をリセット
-        rb2D.AddForce(new Vector2(knockX, 0), ForceMode2D.Impulse);
+        rb.velocity = Vector2.zero; // 現在の速度をリセット
+        rb.AddForce(new Vector2(knockX, 0), ForceMode.Impulse);
     }
 
     public bool GetIsInoperable()

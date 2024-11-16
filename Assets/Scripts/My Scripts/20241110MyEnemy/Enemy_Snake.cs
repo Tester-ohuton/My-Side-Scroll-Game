@@ -66,7 +66,7 @@ public class Enemy_Snake : EnemyBase
         }
 
         // 移動処理
-        Vector2 vec = rb2D.velocity;   // 速度ベクトル
+        Vector2 vec = rb.velocity;   // 速度ベクトル
         vec.x += speed * Time.deltaTime;
         // x方向の速度の最大値を設定
         if (vec.x > 0.0f) // 右方向
@@ -74,7 +74,7 @@ public class Enemy_Snake : EnemyBase
         else // 左方向
             vec.x = Mathf.Clamp(vec.x, -maxSpeed, 0.0f);
         // 速度ベクトルをセット
-        rb2D.velocity = vec;
+        rb.velocity = vec;
     }
 
     // FixedUpdate
@@ -83,9 +83,9 @@ public class Enemy_Snake : EnemyBase
         // アクターが近くに居ない時のブレーキ処理
         if (isBreaking)
         {
-            Vector2 vec = rb2D.velocity;   // エネミー速度
+            Vector2 vec = rb.velocity;   // エネミー速度
             vec.x *= brakeRatio; // x方向のみ減速
-            rb2D.velocity = vec;
+            rb.velocity = vec;
         }
     }
 }

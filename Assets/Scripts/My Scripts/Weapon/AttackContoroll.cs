@@ -29,52 +29,57 @@ public class AttackContoroll : MonoBehaviour
 
     void Update()
     {
-		if (AttackCnt == 1)
-		{
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (AttackCnt == 1)
+            {
+                Attack();
+            }
+            if (AttackCnt == 2)
+            {
+                Attack();
+            }
+            if (AttackCnt == 3)
+            {
+                Attack();
+                AttackCnt = 0;
+            }
         }
-		if (AttackCnt == 2)
-		{
-        }
-		if (AttackCnt == 3)
-		{
-			AttackCnt = 0;
-		}
 	}
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void Attack()
+    {
+        // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
+        int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
+        Debug.Log($"damage: {damage}");
+        enemyStatus.SetHp(damage);
+
+        if (se != null)
+        {
+            // 攻撃ヒット音
+            se.GetComponent<SEManager>().PlaySE(1);
+        }
+    }
+
+    void OnTriggerEnter(Collider collision)
     {
         // オブジェクトタグがEnemyのとき
-        if (!hitflg && collision.CompareTag("Enemy"))
+        if (!hitflg && collision.tag == "Enemy")
         {
-            if (se != null)
-            {
-                // 攻撃ヒット音
-                se.GetComponent<SEManager>().PlaySE(1);
-            }
-
             // 敵キャラを倒したかを取得
             enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
             
             enemy = collision.gameObject.GetComponent<Enemy>();
-            if (enemy == null && enemy.IsHitFlag()) return;
+            if (enemy == null) return;
 
             enemyStatus = collision.gameObject.GetComponent<EnemyStatus>();
 
             hitflg = true;
 
-            // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
-            int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
-            Debug.Log($"damage: {damage}");
-            enemyStatus.SetHp(damage);
-
             if (enemyStatus.GetHp() <= 0)
             {
-                if (!enemy.IsHitFlag())
-                {
-                    myEnemy.AddEnemy(enemyInfo.enemyData.GetEnemyType());
-                    Debug.Log(enemyInfo.enemyData.GetEnemyType());
-                    enemy.SetIsHitFlag(true);
-                }
+                myEnemy.AddEnemy(enemyInfo.enemyData.GetEnemyType());
+                Debug.Log(enemyInfo.enemyData.GetEnemyType());
             }
 
             if (damageEffect != null)
@@ -104,5 +109,7 @@ public class AttackContoroll : MonoBehaviour
     {
         //Debug.Log("atattayo!!");
         //Hitflg = false;
+
+        AttackCnt = 1;
     }
 }

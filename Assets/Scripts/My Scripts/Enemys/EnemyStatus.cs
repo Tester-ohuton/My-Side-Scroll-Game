@@ -55,7 +55,8 @@ public class EnemyStatus : MonoBehaviour
 
     public void SetHp(int hp)
     {
-        this.curHP -= hp;
+        if(0 < this.curHP)
+            this.curHP -= hp;
 
         // HP表示用UIのアップデート
         UpdateHPValue();

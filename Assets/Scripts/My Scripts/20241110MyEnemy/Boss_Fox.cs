@@ -10,13 +10,6 @@ using DG.Tweening;
 /// </summary>
 public class Boss_Fox : EnemyBase
 {
-    // 画像素材
-    [Header("画像素材")]
-    [SerializeField] private Sprite sprite_Wait = null; // 待機
-    [SerializeField] private Sprite[] spriteList_Move = null; // 移動アニメーション
-    [SerializeField] private Sprite sprite_Charge = null; // 立ちチャージ
-    [SerializeField] private Sprite sprite_Fire = null; // 立ち攻撃
-
     // 弾丸プレハブ
     [Header("火炎弾プレハブ")]
     public GameObject fireBulletPrefab;
@@ -51,30 +44,18 @@ public class Boss_Fox : EnemyBase
 
         // Sequenceの内容をセットする
         // ジャンプ移動
-        for (int i = 0; i < spriteList_Move.Length; i++)
-        {
-            int nowCount = i;
-            actionSequence.AppendCallback(() =>
-            {
-                // プレイヤーの位置を向く
-                LookAtActor();
-                // ジャンプ移動
-                Vector2 startVelocity = jumpSpeed;
-                if (!rightFacing)
-                    startVelocity.x *= -1.0f;
-                rb2D.velocity = startVelocity;
-                // スプライト適用
-                spriteRenderer.sprite = spriteList_Move[nowCount];
-            });
-            actionSequence.AppendInterval(movingTime);
-        }
-        // チャージ
         actionSequence.AppendCallback(() =>
         {
-            // スプライト適用
-            spriteRenderer.sprite = sprite_Charge;
+            // プレイヤーの位置を向く
+            LookAtActor();
+            // ジャンプ移動
+            Vector2 startVelocity = jumpSpeed;
+            if (!rightFacing)
+                startVelocity.x *= -1.0f;
+            rb.velocity = startVelocity;
         });
-        actionSequence.AppendInterval(chargeTime);
+        actionSequence.AppendInterval(movingTime);
+
         // 火弾発射
         for (int i = 0; i < fireNum; i++)
         {
@@ -84,8 +65,6 @@ public class Boss_Fox : EnemyBase
                 LookAtActor();
                 // 火弾攻撃
                 ShotBullet_Fire();
-                // スプライト適用
-                spriteRenderer.sprite = sprite_Fire;
             });
             actionSequence.AppendInterval(fireInterval);
         }
@@ -137,7 +116,11 @@ public class Boss_Fox : EnemyBase
             3.0f, // 存在時間
             true); // 地面に当たると消える
                    // 右向きならスプライト反転
+
+        // キャラクターの向き制御
+        Vector2 lscale = obj.transform.localScale;
+
         if (rightFacing)
-            obj.GetComponent<SpriteRenderer>().flipX = true;
+            lscale.x *= 1;
     }
 }
