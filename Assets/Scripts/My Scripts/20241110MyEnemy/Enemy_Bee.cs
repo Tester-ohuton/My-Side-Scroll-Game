@@ -96,6 +96,21 @@ public class Enemy_Bee : EnemyBase
         if (isVanishing)
             return;
 
+        // 体力０になったらモード変更
+        if (status.GetHp() <= 0)
+        {
+            curMode = Enemy04Mode.DIE;
+        }
+
+        // プレイヤーが倒れたら歩きモードへ
+        // 歩きモードになったら入らない
+        if (playerObj.GetComponent<PlayerStatus>().GetCurHp() <= 0 &&
+            curMode != Enemy04Mode.WALK)
+        {
+            animator.SetBool("isAttack", false);
+            curMode = Enemy04Mode.PLAYER_DIE;
+        }
+
         // 攻撃が当たってノックバック処理してないとき
         if (scissors.GetComponent<AttackContoroll>().GethitFlg() && !isStart)
         {

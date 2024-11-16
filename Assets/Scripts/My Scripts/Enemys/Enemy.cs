@@ -7,10 +7,11 @@ public class Enemy : MonoBehaviour
     // ================================
     // ‰¼“G
     // ================================
+    [SerializeField] GameObject enemyPrefab;
+    
     private DropItem item;
     private EnemyStatus sta;
 
-    public bool isHitFlag;
     public bool isdead;
 
     public static bool flag = false;
@@ -37,19 +38,14 @@ public class Enemy : MonoBehaviour
      
     }
 
-    public void SetIsHitFlag(bool flg)
-    {
-        isHitFlag = flg;
-    }
-
-    public bool IsHitFlag()
-    {
-        return isHitFlag;
-    }
-
     public void SetIsDead(bool flg)
     {
         isdead = flg;
+    }
+
+    public bool GetDead()
+    {
+        return isdead;
     }
 
     void Die()
@@ -63,7 +59,9 @@ public class Enemy : MonoBehaviour
 
             Quest_Level_1.OnEnemyDestroyCountEvent.Invoke();
 
-            Destroy(gameObject.transform.root.gameObject);
+            enemyPrefab.SetActive(false);
+
+            //Destroy(gameObject.transform.root.gameObject);
 
             if (gameObject.name == "obakefurosiki:obakefurosiki")
             {

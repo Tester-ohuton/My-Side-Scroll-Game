@@ -18,7 +18,7 @@ public class CameraCon : MonoBehaviour
 
     void LateUpdate()
 	{
-		if (cameraTrans != null)
+		if (playerTrans != null)
 		{
 			cameraTrans.position = new Vector3(playerTrans.position.x, playerTrans.position.y, 0) + cameraPos;
 		}
