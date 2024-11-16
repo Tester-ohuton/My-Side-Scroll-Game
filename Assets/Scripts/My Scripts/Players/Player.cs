@@ -23,8 +23,6 @@ public class Player : MonoBehaviour
 
     private ItemInfo iteminfo;
     private MyItem myitem;
-    private MyEnemy myEnemy;
-    private Quest_Level_1 quest_Level_1;
 
     private CharacterController controller;
     private KnockBack knock;
@@ -33,6 +31,8 @@ public class Player : MonoBehaviour
 
     private bool Jump;
     private bool isJump;
+
+    private bool isGround;
 
     // 攻撃モーションで使用
     private GameObject scissors1;
@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         myitem = GetComponent<MyItem>();
-        myEnemy = GetComponent<MyEnemy>();
 
         controller = GetComponent<CharacterController>();
         knock = GetComponent<KnockBack>();
@@ -53,10 +52,9 @@ public class Player : MonoBehaviour
 
         // コライダー取得
         scissors1 = GameObject.Find("scissors1");
-        quest_Level_1 = GameObject.Find("Quest").GetComponent<Quest_Level_1>();
-
+        
         Jump = false;
-
+        isJump = false;
     }
 
     void Update()
@@ -105,8 +103,20 @@ public class Player : MonoBehaviour
 
         x = Input.GetAxis("Horizontal");
 
-        //CharacterControllerのisGroundedで接地判定
-        if (CheckGrounded())
+        if (!controller.isGrounded)
+        {
+            if (CheckGrounded())
+            {
+                isGround = true;
+            }
+            else
+            {
+                isGround = false;
+            }
+        }
+        
+        //CharacterControllerのisGroundedまたはRayで接地判定
+        if (controller.isGrounded && isGround)
         {
             anime.SetBool("isJump", false);
 
@@ -116,8 +126,14 @@ public class Player : MonoBehaviour
             moveDirection *= speed;
             //moveDirection.x *= Vec;
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                // ジャンプアニメ
+                anime.SetBool("isJump", true);
+
+                // ジャンプアニメスピード
+                anime.SetFloat("animSpeed", 2.0f);
+
                 // ジャンプ中フラグオン
                 isJump = true;
 
