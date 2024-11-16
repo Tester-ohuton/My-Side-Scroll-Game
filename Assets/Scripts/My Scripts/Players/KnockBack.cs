@@ -19,7 +19,7 @@ public class KnockBack : MonoBehaviour
     EnemyStatus enemyStatus;
 
     //CharacterController controller;
-    Rigidbody2D rb2D;
+    Rigidbody rb;
 
     // 操作不可時間
     float inoperableTime = 1.0f;
@@ -70,7 +70,7 @@ public class KnockBack : MonoBehaviour
         invincibleTime = flickerDuration;
 
         playerStatus = GetComponent<PlayerStatus>();
-        rb2D = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
 
         childrenRenderer = GetComponentsInChildren<Renderer>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -291,8 +291,8 @@ public class KnockBack : MonoBehaviour
     private void Knock(float knockX)
     {
         // ノックバックの力をRigidbodyに加える
-        rb2D.velocity = Vector2.zero; // 現在の速度をリセット
-        rb2D.AddForce(new Vector2(knockX, 0), ForceMode2D.Impulse);
+        rb.velocity = Vector2.zero; // 現在の速度をリセット
+        rb.AddForce(new Vector2(knockX, 0), ForceMode.Impulse);
     }
 
     public bool GetIsInoperable()

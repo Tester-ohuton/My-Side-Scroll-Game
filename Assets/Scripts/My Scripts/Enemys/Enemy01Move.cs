@@ -62,7 +62,7 @@ public class Enemy01Move : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // 初期モード取得
-        curMode = Enemy01Mode.WALK;
+        curMode = initialMode;
 
         // 初期位置取得
         initPos = this.transform.position;
@@ -73,7 +73,7 @@ public class Enemy01Move : MonoBehaviour
         dir = 1;
         transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
 
-        // はさみ
+        // プレイヤー武器
         scissors = GameObject.Find("scissors1");
 
         // 敵ノックバック処理用
@@ -258,6 +258,29 @@ public class Enemy01Move : MonoBehaviour
                 }
                 break;
         }
+
+        /* 2024/11/16 パターンを追加しやすいようにひな形を用意*/
+        /*
+        // モードごとに行動パターンを変える
+        switch (curMode)
+        {
+            case Enemy01Mode.WALK:
+                
+                break;
+
+            case Enemy01Mode.DIE:
+
+                break;
+
+            case Enemy01Mode.PLAYER_DIE:
+                
+                break;
+
+            case Enemy01Mode.KNOCK:
+                
+                break;
+        }
+        */
 
         // 座標更新
         thistrans.position = pos;
