@@ -81,7 +81,7 @@ public class Enemy03Move : MonoBehaviour
         player = playerObj.GetComponent<Player>();
 
         dir = 1;
-        transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
+        //transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
 
         // はさみ
         scissors = GameObject.Find("scissors1");
@@ -138,7 +138,7 @@ public class Enemy03Move : MonoBehaviour
                 {
                     dir = 1;
                 }
-                transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(dir, 0, 0));
 
                 // プレイヤーが視認範囲にいるか
                 Search(dir);
@@ -154,7 +154,7 @@ public class Enemy03Move : MonoBehaviour
             case Enemy03Mode.BACK:
                 // 初期位置へ戻る方向を取得
                 BackDir = new Vector3((initPos.x - thistrans.position.x), 0, 0).normalized;
-                transform.rotation = Quaternion.LookRotation(new Vector3(BackDir.x, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(BackDir.x, 0, 0));
 
                 // プレイヤーが視認範囲にいるか
                 Search(BackDir.x);
@@ -233,7 +233,7 @@ public class Enemy03Move : MonoBehaviour
             case Enemy03Mode.PLAYER_DIE:
                 // 初期位置へ戻る方向を取得
                 BackDir = new Vector3((initPos.x - thistrans.position.x), 0, 0).normalized;
-                transform.rotation = Quaternion.LookRotation(new Vector3(BackDir.x, 0, 0));
+                //transform.rotation = Quaternion.LookRotation(new Vector3(BackDir.x, 0, 0));
 
                 // 方向を保持させる
                 dir = BackDir.x;

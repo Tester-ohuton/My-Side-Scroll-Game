@@ -159,17 +159,6 @@ public class EnemyBase : MonoBehaviour
     /// </summary>
     private void Vanish()
     {
-        // ドロップアイテム発生確認
-        const int ItemDropRatio = 26; // アイテムドロップ率(%)
-        if (Random.Range(0, 100) < ItemDropRatio && !isBoss)
-        {// アイテムドロップする
-         // ドロップするアイテムの種類を決定
-            int dropItemType = Random.Range(0, areaManager.stageManager.dropItemPrefabs.Length);
-            // アイテム出現
-            GameObject obj = Instantiate(areaManager.stageManager.dropItemPrefabs[dropItemType]);
-            obj.transform.position = transform.position;
-        }
-
         // オブジェクト消滅
         Destroy(gameObject);
     }
