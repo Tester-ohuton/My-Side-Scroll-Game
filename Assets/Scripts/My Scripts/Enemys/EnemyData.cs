@@ -20,6 +20,20 @@ public class EnemyData : ScriptableObject
         ENEMY_4,
         ENEMY_5,
         ENEMY_6,
+        ENEMY_7,
+        ENEMY_8,
+        ENEMY_9,
+        ENEMY_10,
+        ENEMY_11,
+        ENEMY_12,
+        ENEMY_13,
+        ENEMY_14,
+        ENEMY_15,
+        ENEMY_16,
+        ENEMY_17,
+        ENEMY_18,
+        ENEMY_19,
+        ENEMY_20,
 
 
         MAX_ENEMY
@@ -31,6 +45,7 @@ public class EnemyData : ScriptableObject
     [SerializeField] private string enemyName;
     // 敵が落とすアイテム
     [SerializeField] private ItemData.Type itemtype;
+
     // アイテムのドロップ率
     [SerializeField] private int Droprate;
 
@@ -51,6 +66,11 @@ public class EnemyData : ScriptableObject
     public string GetEnemyName()
     {
         return enemyName;
+    }
+
+    public ItemData.Type GetItemType()
+    {
+        return itemtype;
     }
 
     public int GetHp()

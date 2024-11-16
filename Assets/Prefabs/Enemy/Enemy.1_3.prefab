@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sum: 1
-  enemyNumber: 0
+  enemyId: 0
 --- !u!114 &1762547240906381146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a705dd31ab7b29c49b21ddf84e253612, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 9371cc386efc7fa45bcb81075df42e57, type: 2}
+  enemyData: {fileID: 11400000, guid: 202ba36e0d9f88b43abb7228bdf2c554, type: 2}
 --- !u!114 &8077795488585750225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,11 +362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.005
+      value: 0.009
       objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.005
+      value: 0.009
       objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_LocalScale.z
