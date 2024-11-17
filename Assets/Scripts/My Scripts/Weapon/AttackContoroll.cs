@@ -33,15 +33,15 @@ public class AttackContoroll : MonoBehaviour
         {
             if (AttackCnt == 1)
             {
-                Attack();
+                
             }
             if (AttackCnt == 2)
             {
-                Attack();
+                
             }
             if (AttackCnt == 3)
             {
-                Attack();
+                
                 AttackCnt = 0;
             }
         }
@@ -73,6 +73,8 @@ public class AttackContoroll : MonoBehaviour
             if (enemy == null) return;
 
             enemyStatus = collision.gameObject.GetComponent<EnemyStatus>();
+
+            Attack();
 
             hitflg = true;
 
