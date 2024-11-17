@@ -15,13 +15,6 @@ public class EnemyBodyAttack : MonoBehaviour
     {
         // 参照取得
         enemyBase = GetComponentInParent<EnemyBase>();
-
-        // 当たり判定の大きさを適用
-        var Coll_TouchArea = GetComponent<BoxCollider2D>();
-        var Coll_Body = enemyBase.gameObject.GetComponent<BoxCollider2D>();
-        Coll_TouchArea.offset = Coll_Body.offset;
-        Coll_TouchArea.size = Coll_Body.size;
-        Coll_TouchArea.size *= 0.8f;
     }
 
     // トリガー滞在時に呼出

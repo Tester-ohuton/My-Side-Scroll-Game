@@ -60,6 +60,7 @@ public class Enemy : MonoBehaviour
             Quest_Level_1.OnEnemyDestroyCountEvent.Invoke();
 
             enemyPrefab.SetActive(false);
+            sta.Init();
 
             //Destroy(gameObject.transform.root.gameObject);
 
@@ -81,5 +82,10 @@ public class Enemy : MonoBehaviour
             item.ItemDrop();
             isdead = false;
         }
+    }
+
+    public void ReSpawn()
+    {
+        enemyPrefab.SetActive(true);
     }
 }
