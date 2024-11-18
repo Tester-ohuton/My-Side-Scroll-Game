@@ -2383,6 +2383,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4789014504492048390, guid: 7a87ef1d4ae94ba4a85082023f5d361a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5083785137610808443, guid: 7a87ef1d4ae94ba4a85082023f5d361a, type: 3}
       propertyPath: m_Name
       value: Enemy002_4
