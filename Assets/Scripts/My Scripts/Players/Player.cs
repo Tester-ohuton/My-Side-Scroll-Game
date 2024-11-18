@@ -230,10 +230,13 @@ public class Player : MonoBehaviour
         // はさみの当たり判定オン
         scissors1.GetComponent<Collider>().enabled = true;
 
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.3f);
 
         // はさみの当たり判定オン
         scissors1.GetComponent<Collider>().enabled = false;
+
+        // 攻撃ヒット判定用フラグオフ
+        scissors1.GetComponent<AttackContoroll>().SethitFlg(false);
     }
 
     private void AttackMotion()

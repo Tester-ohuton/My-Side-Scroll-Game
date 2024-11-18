@@ -42,9 +42,6 @@ public class Enemy_Bee : EnemyBase
     private Vector3 pos;
     private int Step;
 
-    // 定数定義
-    private const float FlyAnimationSpan = 0.3f; // 飛行アニメーションのスプライト切り替え時間
-
     // 歩く範囲(ゲーム開始時のスポーン位置を起点)
     private float walkRange = 3.0f;
 

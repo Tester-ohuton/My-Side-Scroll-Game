@@ -17,6 +17,7 @@ public class AttackContoroll : MonoBehaviour
     GameObject se;
 
 	int AttackCnt = 1;
+    bool isAttack;
 
 	void Start()
     {
@@ -44,20 +45,27 @@ public class AttackContoroll : MonoBehaviour
                 
                 AttackCnt = 0;
             }
+
+            isAttack = true;
         }
 	}
 
     private void Attack()
     {
-        // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
-        int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
-        Debug.Log($"damage: {damage}");
-        enemyStatus.SetHp(damage);
-
-        if (se != null)
+        if(isAttack)
         {
-            // 攻撃ヒット音
-            se.GetComponent<SEManager>().PlaySE(1);
+            // 敵が受けるダメージ（プレイヤーの攻撃力 - 敵の防御力）
+            int damage = Mathf.Max(1, StaticStatus.GetPlayerATK() - enemyStatus.GetDEF());
+            Debug.Log($"damage: {damage}");
+            enemyStatus.SetHp(damage);
+
+            if (se != null)
+            {
+                // 攻撃ヒット音
+                se.GetComponent<SEManager>().PlaySE(1);
+            }
+
+            isAttack = false;
         }
     }
 

@@ -41,7 +41,7 @@ public class KnockBack : MonoBehaviour
     Coroutine flicker;
 
     // ダメージの点滅の長さ。
-    float flickerDuration = 2.0f;
+    float flickerDuration = 1.6f;
 
     // 無敵時間
     float invincibleTime;
@@ -284,7 +284,7 @@ public class KnockBack : MonoBehaviour
     private void Knock(float knockX)
     {
         // ノックバックの力をRigidbodyに加える
-        rb.velocity = Vector2.zero; // 現在の速度をリセット
+        rb.linearVelocity = Vector2.zero; // 現在の速度をリセット
         rb.AddForce(new Vector2(knockX, 0), ForceMode.Impulse);
     }
 
