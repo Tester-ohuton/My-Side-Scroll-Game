@@ -203,7 +203,6 @@ GameObject:
   - component: {fileID: 1311998111744998387}
   - component: {fileID: 1008058406537573940}
   - component: {fileID: 4208906474940780117}
-  - component: {fileID: 5483273137207645005}
   m_Layer: 0
   m_Name: Enemy002_6
   m_TagString: Enemy
@@ -319,28 +318,6 @@ MonoBehaviour:
   jumpInterval: 8
   jumpPower_Forward: 3
   jumpPower_Upward: 8
---- !u!114 &5483273137207645005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4100544563170550195}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d2ac36199342df41a60a06cb39a237d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaManager: {fileID: 0}
-  touchDamage: 0
-  isBoss: 0
-  bossDefeatParticlePrefab: {fileID: 0}
-  nowHP: 0
-  isDamaged: 0
-  isDead: 0
-  isVanishing: 0
-  isInvis: 0
-  rightFacing: 0
 --- !u!1001 &6092351723857353697
 PrefabInstance:
   m_ObjectHideFlags: 0
