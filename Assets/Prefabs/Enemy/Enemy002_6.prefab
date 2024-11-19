@@ -238,7 +238,7 @@ Animator:
   m_GameObject: {fileID: 4100544563170550195}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7014b387c1ac4d449becde16ef09d9f9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -313,6 +313,9 @@ MonoBehaviour:
   isVanishing: 0
   isInvis: 0
   rightFacing: 0
+  curMode: 0
+  initialMode: 0
+  preMode: 0
   jumpInterval: 8
   jumpPower_Forward: 3
   jumpPower_Upward: 8
@@ -323,7 +326,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4100544563170550195}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d2ac36199342df41a60a06cb39a237d, type: 3}
   m_Name: 
@@ -424,7 +427,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.21
+      value: 1.46
       objectReference: {fileID: 0}
     - target: {fileID: 507818094643494265, guid: 8f4e1ca6d0b9e004cb1cdf2644b3d49e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
