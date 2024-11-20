@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ŒÂ•Ê“GƒNƒ‰ƒXFSnake
+/// å€‹åˆ¥æ•µã‚¯ãƒ©ã‚¹ï¼šSnake
 /// 
-/// ƒAƒNƒ^[‚ª‹ß‚­‚É‚¢‚é‚ÆÚ‹ß‚·‚é
-/// UŒ‚‚µ‚Ä‚±‚È‚¢‚ª‘Ì“–‚½‚è‚Í‚µ‚Ä‚­‚é
+/// ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¿‘ãã«ã„ã‚‹ã¨æ¥è¿‘ã™ã‚‹
+/// æ”»æ’ƒã—ã¦ã“ãªã„ãŒä½“å½“ãŸã‚Šã¯ã—ã¦ãã‚‹
 /// </summary>
 public class Enemy_Snake : EnemyBase
 {
-    // İ’è€–Ú
-    [Header("ˆÚ“®‘¬“x")]
+    // è¨­å®šé …ç›®
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float movingSpeed;
-    [Header("Å‘åˆÚ“®‘¬“x")]
+    [Header("æœ€å¤§ç§»å‹•é€Ÿåº¦")]
     public float maxSpeed;
-    [Header("ˆÚ“®ğŒ(ƒAƒNƒ^[‚Æ‚Ì‹——£‚ª‚±‚Ì’lˆÈ‰º‚È‚çˆÚ“®)")]
+    [Header("ç§»å‹•æ¡ä»¶(ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã®è·é›¢ãŒã“ã®å€¤ä»¥ä¸‹ãªã‚‰ç§»å‹•)")]
     public float awakeDistance;
-    [Header("”ñˆÚ“®Œ¸‘¬—¦")]
+    [Header("éç§»å‹•æ™‚æ¸›é€Ÿç‡")]
     public float brakeRatio;
 
-    // Šeí•Ï”
-    private bool isBreaking;    // ƒuƒŒ[ƒLì“®ƒtƒ‰ƒO true‚ÅŒ¸‘¬‚·‚é
+    // å„ç¨®å¤‰æ•°
+    private bool isBreaking;    // ãƒ–ãƒ¬ãƒ¼ã‚­ä½œå‹•ãƒ•ãƒ©ã‚° trueã§æ¸›é€Ÿã™ã‚‹
 
     /// <summary>
-    /// ‚±‚Ìƒ‚ƒ“ƒXƒ^[‚Ì‹‚éƒGƒŠƒA‚ÉƒAƒNƒ^[‚ªi“ü‚µ‚½‚Ì‹N“®ˆ—(ƒGƒŠƒAƒAƒNƒeƒBƒu‰»ˆ—)
+    /// ã“ã®ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®å±…ã‚‹ã‚¨ãƒªã‚¢ã«ã‚¢ã‚¯ã‚¿ãƒ¼ãŒé€²å…¥ã—ãŸæ™‚ã®èµ·å‹•æ™‚å‡¦ç†(ã‚¨ãƒªã‚¢ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–æ™‚å‡¦ç†)
     /// </summary>
     public override void OnAreaActivated()
     {
-        // Œ³X‚Ì‹N“®ˆ—‚ğÀs
+        // å…ƒã€…ã®èµ·å‹•æ™‚å‡¦ç†ã‚’å®Ÿè¡Œ
         base.OnAreaActivated();
     }
 
@@ -36,56 +36,56 @@ public class Enemy_Snake : EnemyBase
     // Update
     void Update()
     {
-        // Á–Å’†‚È‚çˆ—‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰å‡¦ç†ã—ãªã„
         if (isVanishing)
             return;
 
-        // ƒAƒNƒ^[‚ª‹ß‚­‚É‚¢‚é‚ÆÚ‹ß‚·‚éˆ—
-        float speed = 0.0f; // x•ûŒüˆÚ“®‘¬“x
-        Vector2 ePos = transform.position;  // ƒGƒlƒ~[À•W
-        Vector2 aPos = actorTransform.position;   // ƒAƒNƒ^[À•W
+        // ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¿‘ãã«ã„ã‚‹ã¨æ¥è¿‘ã™ã‚‹å‡¦ç†
+        float speed = 0.0f; // xæ–¹å‘ç§»å‹•é€Ÿåº¦
+        Vector2 ePos = transform.position;  // ã‚¨ãƒãƒŸãƒ¼åº§æ¨™
+        Vector2 aPos = actorTransform.position;   // ã‚¢ã‚¯ã‚¿ãƒ¼åº§æ¨™
 
-        // ƒAƒNƒ^[‚Æ‚Ì‹——£‚ª—£‚ê‚Ä‚¢‚éê‡‚ÍƒuƒŒ[ƒLƒtƒ‰ƒO‚ğ—§‚ÄI—¹(ˆÚ“®‚µ‚È‚¢)
+        // ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã®è·é›¢ãŒé›¢ã‚Œã¦ã„ã‚‹å ´åˆã¯ãƒ–ãƒ¬ãƒ¼ã‚­ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦çµ‚äº†(ç§»å‹•ã—ãªã„)
         if (Vector2.Distance(ePos, aPos) > awakeDistance)
         {
             isBreaking = true;
             return;
         }
-        isBreaking = false; // —£‚ê‚Ä‚È‚¢‚È‚çƒuƒŒ[ƒLƒtƒ‰ƒOfalse
+        isBreaking = false; // é›¢ã‚Œã¦ãªã„ãªã‚‰ãƒ–ãƒ¬ãƒ¼ã‚­ãƒ•ãƒ©ã‚°false
 
-        // ƒAƒNƒ^[‚Æ‚ÌˆÊ’uŠÖŒW‚©‚çŒü‚«‚ğŒˆ’è
+        // ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã®ä½ç½®é–¢ä¿‚ã‹ã‚‰å‘ãã‚’æ±ºå®š
         if (ePos.x > aPos.x)
-        {// ¶Œü‚«
+        {// å·¦å‘ã
             speed = -movingSpeed;
             SetFacingRight(false);
         }
         else
-        {// ‰EŒü‚«
+        {// å³å‘ã
             speed = movingSpeed;
             SetFacingRight(true);
         }
 
-        // ˆÚ“®ˆ—
-        Vector2 vec = rb.velocity;   // ‘¬“xƒxƒNƒgƒ‹
+        // ç§»å‹•å‡¦ç†
+        Vector2 vec = rb.linearVelocity;   // é€Ÿåº¦ãƒ™ã‚¯ãƒˆãƒ«
         vec.x += speed * Time.deltaTime;
-        // x•ûŒü‚Ì‘¬“x‚ÌÅ‘å’l‚ğİ’è
-        if (vec.x > 0.0f) // ‰E•ûŒü
+        // xæ–¹å‘ã®é€Ÿåº¦ã®æœ€å¤§å€¤ã‚’è¨­å®š
+        if (vec.x > 0.0f) // å³æ–¹å‘
             vec.x = Mathf.Clamp(vec.x, 0.0f, maxSpeed);
-        else // ¶•ûŒü
+        else // å·¦æ–¹å‘
             vec.x = Mathf.Clamp(vec.x, -maxSpeed, 0.0f);
-        // ‘¬“xƒxƒNƒgƒ‹‚ğƒZƒbƒg
-        rb.velocity = vec;
+        // é€Ÿåº¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã‚»ãƒƒãƒˆ
+        rb.linearVelocity = vec;
     }
 
     // FixedUpdate
     void FixedUpdate()
     {
-        // ƒAƒNƒ^[‚ª‹ß‚­‚É‹‚È‚¢‚ÌƒuƒŒ[ƒLˆ—
+        // ã‚¢ã‚¯ã‚¿ãƒ¼ãŒè¿‘ãã«å±…ãªã„æ™‚ã®ãƒ–ãƒ¬ãƒ¼ã‚­å‡¦ç†
         if (isBreaking)
         {
-            Vector2 vec = rb.velocity;   // ƒGƒlƒ~[‘¬“x
-            vec.x *= brakeRatio; // x•ûŒü‚Ì‚İŒ¸‘¬
-            rb.velocity = vec;
+            Vector2 vec = rb.linearVelocity;   // ã‚¨ãƒãƒŸãƒ¼é€Ÿåº¦
+            vec.x *= brakeRatio; // xæ–¹å‘ã®ã¿æ¸›é€Ÿ
+            rb.linearVelocity = vec;
         }
     }
 }

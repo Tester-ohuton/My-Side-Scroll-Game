@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 9086228736417442094}
   - component: {fileID: 1348282879743450110}
   m_Layer: 0
-  m_Name: Enemy1
+  m_Name: child0
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,6 +277,7 @@ MonoBehaviour:
   curHP: 0
   ATK: 0
   DEF: 0
+  enemyName: 
   HPUI: {fileID: 8572786303986708473}
 --- !u!114 &9086228736417442094
 MonoBehaviour:

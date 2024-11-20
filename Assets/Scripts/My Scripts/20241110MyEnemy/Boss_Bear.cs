@@ -3,44 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ŒÂ•Ê“GƒNƒ‰ƒX(ƒ{ƒX)FBear
+/// å€‹åˆ¥æ•µã‚¯ãƒ©ã‚¹(ãƒœã‚¹)ï¼šBear
 /// 
-/// •Ç“o‚èE’…’nÕŒ‚”g
+/// å£ç™»ã‚Šãƒ»ç€åœ°è¡æ’ƒæ³¢
 /// </summary>
 public class Boss_Bear : EnemyBase
 {
-    // ’eŠÛƒvƒŒƒnƒu
-    [Header("ƒGƒlƒ~[’eŠÛƒvƒŒƒnƒu")]
+    // å¼¾ä¸¸ãƒ—ãƒ¬ãƒãƒ–
+    [Header("ã‚¨ãƒãƒŸãƒ¼å¼¾ä¸¸ãƒ—ãƒ¬ãƒãƒ–")]
     public GameObject bulletPrefab;
 
-    // İ’è€–Ú
-    [Header("ˆÚ“®‘¬“x")]
+    // è¨­å®šé …ç›®
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float movingSpeed;
-    [Header("•Ç“o‚è‘¬“x")]
+    [Header("å£ç™»ã‚Šé€Ÿåº¦")]
     public float climbSpeed;
-    [Header("•Ç“o‚èŠÔ")]
+    [Header("å£ç™»ã‚Šæ™‚é–“")]
     public float climbTime;
-    [Header("ƒWƒƒƒ“ƒv—Í")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—åŠ›")]
     public Vector2 jumpPower;
-    [Header("’…’nŠÔ")]
+    [Header("ç€åœ°æ™‚é–“")]
     public float landTime;
 
-    // Šeí•Ï”
-    private bool isFalling; // —‰º’†ƒtƒ‰ƒO
-                            // Šeƒ‚[ƒh•Ê‚ÌŒo‰ßŠÔ
-    private float walkCount = -1.0f; // •às
-    private float climbCount = -1.0f; // •Ç“o‚è
-    private float jumpCount = -1.0f; // ƒWƒƒƒ“ƒv
-    private float landCount = -1.0f; // ’…’n
+    // å„ç¨®å¤‰æ•°
+    private bool isFalling; // è½ä¸‹ä¸­ãƒ•ãƒ©ã‚°
+                            // å„ãƒ¢ãƒ¼ãƒ‰åˆ¥ã®çµŒéæ™‚é–“
+    private float walkCount = -1.0f; // æ­©è¡Œ
+    private float climbCount = -1.0f; // å£ç™»ã‚Š
+    private float jumpCount = -1.0f; // ã‚¸ãƒ£ãƒ³ãƒ—
+    private float landCount = -1.0f; // ç€åœ°
 
     // Start
     void Start()
     {
-        // •Ï”‰Šú‰»
+        // å¤‰æ•°åˆæœŸåŒ–
         walkCount = 0.0f;
     }
     /// <summary>
-    /// ‚±‚Ìƒ‚ƒ“ƒXƒ^[‚Ì‹‚éƒGƒŠƒA‚ÉƒAƒNƒ^[‚ªi“ü‚µ‚½‚Ìˆ—(ƒGƒŠƒAƒAƒNƒeƒBƒu‰»ˆ—)
+    /// ã“ã®ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®å±…ã‚‹ã‚¨ãƒªã‚¢ã«ã‚¢ã‚¯ã‚¿ãƒ¼ãŒé€²å…¥ã—ãŸæ™‚ã®å‡¦ç†(ã‚¨ãƒªã‚¢ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–æ™‚å‡¦ç†)
     /// </summary>
     public override void OnAreaActivated()
     {
@@ -50,54 +50,54 @@ public class Boss_Bear : EnemyBase
     // FixedUpdate
     void FixedUpdate()
     {
-        // Á–Å’†‚È‚çˆ—‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰å‡¦ç†ã—ãªã„
         if (isVanishing)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.isKinematic = true;
             return;
         }
 
-        // •Ç“o‚èˆ—
+        // å£ç™»ã‚Šå‡¦ç†
         if (climbCount > -1.0f)
         {
             climbCount += Time.fixedDeltaTime;
-            // cˆÚ“®
+            // ç¸¦ç§»å‹•
             float ySpeed = climbSpeed;
-            rb.velocity = new Vector2(rb.velocity.x, ySpeed);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, ySpeed);
 
-            // ƒWƒƒƒ“ƒvˆ—
+            // ã‚¸ãƒ£ãƒ³ãƒ—å‡¦ç†
             if (climbCount >= climbTime)
             {
                 climbCount = -1.0f;
                 jumpCount = 0.0f;
                 isFalling = false;
 
-                // ƒWƒƒƒ“ƒv—ÍŒvZE”½‰f
+                // ã‚¸ãƒ£ãƒ³ãƒ—åŠ›è¨ˆç®—ãƒ»åæ˜ 
                 Vector2 jumpVec = jumpPower;
                 if (!rightFacing)
                     jumpVec.x *= -1.0f;
-                rb.velocity = jumpVec;
+                rb.linearVelocity = jumpVec;
             }
         }
-        // ‰¡ˆÚ“®ˆ—
+        // æ¨ªç§»å‹•å‡¦ç†
         else if (walkCount > -1.0f)
         {
             walkCount += Time.fixedDeltaTime;
 
-            // •Ç‚É‚Ô‚Â‚©‚Á‚½‚çŒü‚«•ÏXE•Ç“o‚è
+            // å£ã«ã¶ã¤ã‹ã£ãŸã‚‰å‘ãå¤‰æ›´ãƒ»å£ç™»ã‚Š
             bool isStartClimb = false;
-            if (rightFacing && rb.velocity.x <= 0.0f)
+            if (rightFacing && rb.linearVelocity.x <= 0.0f)
             {
                 SetFacingRight(false);
                 isStartClimb = true;
             }
-            else if (!rightFacing && rb.velocity.x >= 0.0f)
+            else if (!rightFacing && rb.linearVelocity.x >= 0.0f)
             {
                 SetFacingRight(true);
                 isStartClimb = true;
             }
-            // •Ç“o‚èŠJn(•à‚«n‚ß‚Ä‚©‚ç­‚È‚­‚Æ‚à1.0•bˆÈã•K—v)
+            // å£ç™»ã‚Šé–‹å§‹(æ­©ãå§‹ã‚ã¦ã‹ã‚‰å°‘ãªãã¨ã‚‚1.0ç§’ä»¥ä¸Šå¿…è¦)
             if (isStartClimb && walkCount > 1.0f)
             {
                 walkCount = -1.0f;
@@ -105,40 +105,40 @@ public class Boss_Bear : EnemyBase
                 return;
             }
 
-            // ‰¡ˆÚ“®
+            // æ¨ªç§»å‹•
             float xSpeed = movingSpeed;
             if (!rightFacing)
                 xSpeed *= -1.0f;
-            rb.velocity = new Vector2(xSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(xSpeed, rb.linearVelocity.y);
         }
-        // ƒWƒƒƒ“ƒv’†ˆ—
+        // ã‚¸ãƒ£ãƒ³ãƒ—ä¸­å‡¦ç†
         else if (jumpCount > -1.0f)
         {
             jumpCount += Time.fixedDeltaTime;
 
-            // —‰º’†”»’è
+            // è½ä¸‹ä¸­åˆ¤å®š
             if (!isFalling)
             {
-                if (rb.velocity.y < -Mathf.Epsilon)
+                if (rb.linearVelocity.y < -Mathf.Epsilon)
                     isFalling = true;
             }
-            // ’…’nˆÚs
-            else if (isFalling && rb.velocity.y >= -0.01f)
+            // ç€åœ°ç§»è¡Œ
+            else if (isFalling && rb.linearVelocity.y >= -0.01f)
             {
                 jumpCount = -1.0f;
                 landCount = 0.0f;
-                // ËŒ‚ˆ—
+                // å°„æ’ƒå‡¦ç†
                 ShotBullet_TwoSideOnGround();
             }
         }
-        // ’…’n’†ˆ—
+        // ç€åœ°ä¸­å‡¦ç†
         else if (landCount > -1.0f)
         {
             landCount += Time.fixedDeltaTime;
 
-            // ˆÚ“®’â~
-            rb.velocity = Vector2.zero;
-            // ‰¡ˆÚ“®ˆÚs
+            // ç§»å‹•åœæ­¢
+            rb.linearVelocity = Vector2.zero;
+            // æ¨ªç§»å‹•ç§»è¡Œ
             if (landCount >= landTime)
             {
                 landCount = -1.0f;
@@ -148,31 +148,31 @@ public class Boss_Bear : EnemyBase
     }
 
     /// <summary>
-    /// ’…’n‚ÌÕŒ‚”g‚ğËŒ‚‚·‚éˆ—
-    /// (’á‚¢ˆÊ’u‚Å¶‰E2•ûŒü‚ÖËŒ‚)
+    /// ç€åœ°æ™‚ã®è¡æ’ƒæ³¢ã‚’å°„æ’ƒã™ã‚‹å‡¦ç†
+    /// (ä½ã„ä½ç½®ã§å·¦å³2æ–¹å‘ã¸å°„æ’ƒ)
     /// </summary>
     private void ShotBullet_TwoSideOnGround()
     {
-        // ’eŠÛƒIƒuƒWƒFƒNƒg¶¬Eİ’è
-        // ËŒ‚ˆÊ’u
+        // å¼¾ä¸¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆãƒ»è¨­å®š
+        // å°„æ’ƒä½ç½®
         Vector2 startPos = transform.position;
-        startPos.y -= 0.8f; // ”­ËˆÊ’u‚ğY•ûŒü‚É”÷’²®
-                            // ‡@
+        startPos.y -= 0.8f; // ç™ºå°„ä½ç½®ã‚’Yæ–¹å‘ã«å¾®èª¿æ•´
+                            // â‘ 
         GameObject obj = Instantiate(bulletPrefab, startPos, Quaternion.identity);
         obj.GetComponent<EnemyShot>().Init(
-            8.0f, // ‘¬“x
-            0, // Šp“x
-            3, // ƒ_ƒ[ƒW—Ê
-            0.9f, // ‘¶İŠÔ
-            false); // ’n–Ê‚É“–‚½‚Á‚Ä‚àÁ‚¦‚È‚¢
-        obj.GetComponent<SpriteRenderer>().flipX = true; // ƒXƒvƒ‰ƒCƒg‚ğ¶‰E”½“]
-                                                         // ‡A
+            8.0f, // é€Ÿåº¦
+            0, // è§’åº¦
+            3, // ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+            0.9f, // å­˜åœ¨æ™‚é–“
+            false); // åœ°é¢ã«å½“ãŸã£ã¦ã‚‚æ¶ˆãˆãªã„
+        obj.GetComponent<SpriteRenderer>().flipX = true; // ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’å·¦å³åè»¢
+                                                         // â‘¡
         obj = Instantiate(bulletPrefab, startPos, Quaternion.identity);
         obj.GetComponent<EnemyShot>().Init(
-            8.0f, // ‘¬“x
-            180, // Šp“x
-            3, // ƒ_ƒ[ƒW—Ê
-            0.9f, // ‘¶İŠÔ
-            false); // ’n–Ê‚É“–‚½‚Á‚Ä‚àÁ‚¦‚È‚¢
+            8.0f, // é€Ÿåº¦
+            180, // è§’åº¦
+            3, // ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
+            0.9f, // å­˜åœ¨æ™‚é–“
+            false); // åœ°é¢ã«å½“ãŸã£ã¦ã‚‚æ¶ˆãˆãªã„
     }
 }

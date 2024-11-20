@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 7_EnemyData
   m_EditorClassIdentifier: 
   enemyType: 7
-  enemyName: 
+  enemyName: Enemy8
   itemtype: 7
   Droprate: 100
   maxHp: 100

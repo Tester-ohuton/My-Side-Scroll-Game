@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 756810021903250819}
   - component: {fileID: 6273011554980875447}
   m_Layer: 0
-  m_Name: Slime_01
+  m_Name: child0
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -358,6 +358,7 @@ MonoBehaviour:
   curHP: 0
   ATK: 0
   DEF: 0
+  enemyName: 
   HPUI: {fileID: 2775604661074776746}
 --- !u!114 &756810021903250819
 MonoBehaviour:

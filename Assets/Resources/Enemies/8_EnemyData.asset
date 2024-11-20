@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51fffeb27be1b2a41b19c6ade0f8fb53, type: 3}
   m_Name: 8_EnemyData
   m_EditorClassIdentifier: 
-  enemyType: 7
-  enemyName: 
+  enemyType: 8
+  enemyName: Enemy9
   itemtype: 7
   Droprate: 100
   maxHp: 100

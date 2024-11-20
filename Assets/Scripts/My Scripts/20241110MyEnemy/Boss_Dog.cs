@@ -3,44 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ŒÂ•Ê“GƒNƒ‰ƒX(ƒ{ƒX)FDog
-/// “ËiUŒ‚EƒWƒƒƒ“ƒvUŒ‚
+/// å€‹åˆ¥æ•µã‚¯ãƒ©ã‚¹(ãƒœã‚¹)ï¼šDog
+/// çªé€²æ”»æ’ƒãƒ»ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒ
 /// </summary>
 public class Boss_Dog : EnemyBase
 {
-    // ƒIƒuƒWƒFƒNƒgEƒRƒ“ƒ|[ƒlƒ“ƒg
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ»ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 
-    // ‰æ‘œ‘fŞ
-    [Header("‰æ‘œ‘fŞ")]
-    [SerializeField] private Sprite sprite_Wait = null; // ‘Ò‹@
-    [SerializeField] private Sprite sprite_Move = null; // ˆÚ“®
-    [SerializeField] private Sprite sprite_Jump = null; // ƒWƒƒƒ“ƒv
+    // ç”»åƒç´ æ
+    [Header("ç”»åƒç´ æ")]
+    [SerializeField] private Sprite sprite_Wait = null; // å¾…æ©Ÿæ™‚
+    [SerializeField] private Sprite sprite_Move = null; // ç§»å‹•æ™‚
+    [SerializeField] private Sprite sprite_Jump = null; // ã‚¸ãƒ£ãƒ³ãƒ—æ™‚
 
-    // İ’è€–Ú
-    [Header("UŒ‚ŠÔŠu")]
+    // è¨­å®šé …ç›®
+    [Header("æ”»æ’ƒé–“éš”")]
     public float attackInterval;
-    [Header("ˆÚ“®‘¬“x")]
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float movingSpeed;
-    [Header("ƒWƒƒƒ“ƒv‰¡ˆÚ“®‘¬“x")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—æ¨ªç§»å‹•é€Ÿåº¦")]
     public float jumpSpeed;
-    [Header("ƒWƒƒƒ“ƒv—Í(Å¬)")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—åŠ›(æœ€å°)")]
     public float jumpPower_Min;
-    [Header("ƒWƒƒƒ“ƒv—Í(Å‘å)")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—åŠ›(æœ€å¤§)")]
     public float jumpPower_Max;
-    [Header("ƒWƒƒƒ“ƒvŠm—¦(0-100)")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—ç¢ºç‡(0-100)")]
     public int jumpRatio;
 
-    // Šeí•Ï”
-    private float nextAttackTime; // Ÿ‚ÌUŒ‚‚Ü‚Å‚Ìc‚èŠÔ
+    // å„ç¨®å¤‰æ•°
+    private float nextAttackTime; // æ¬¡ã®æ”»æ’ƒã¾ã§ã®æ®‹ã‚Šæ™‚é–“
 
     // Start
     void Start()
     {
-        // •Ï”‰Šú‰»
+        // å¤‰æ•°åˆæœŸåŒ–
         nextAttackTime = attackInterval / 2.0f;
     }
     /// <summary>
-    /// ‚±‚Ìƒ‚ƒ“ƒXƒ^[‚Ì‹‚éƒGƒŠƒA‚ÉƒAƒNƒ^[‚ªi“ü‚µ‚½‚Ìˆ—(ƒGƒŠƒAƒAƒNƒeƒBƒu‰»ˆ—)
+    /// ã“ã®ãƒ¢ãƒ³ã‚¹ã‚¿ãƒ¼ã®å±…ã‚‹ã‚¨ãƒªã‚¢ã«ã‚¢ã‚¯ã‚¿ãƒ¼ãŒé€²å…¥ã—ãŸæ™‚ã®å‡¦ç†(ã‚¨ãƒªã‚¢ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–æ™‚å‡¦ç†)
     /// </summary>
     public override void OnAreaActivated()
     {
@@ -50,43 +50,43 @@ public class Boss_Dog : EnemyBase
     // Update
     void Update()
     {
-        // Á–Å’†‚È‚çˆ—‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰å‡¦ç†ã—ãªã„
         if (isVanishing)
             return;
 
-        // UŒ‚ŠÔŠuˆ—
+        // æ”»æ’ƒé–“éš”å‡¦ç†
         nextAttackTime -= Time.deltaTime;
         if (nextAttackTime > 0.0f)
             return;
         nextAttackTime = attackInterval;
-        // ˆê“x‚Å‚àUŒ‚‚µ‚½‚çd—Í‰Á‘¬“x‚ğ‰º‚°‚é
+        // ä¸€åº¦ã§ã‚‚æ”»æ’ƒã—ãŸã‚‰é‡åŠ›åŠ é€Ÿåº¦ã‚’ä¸‹ã’ã‚‹
         rb.useGravity = false;
 
-        // UŒ‚ŠJn
-        Vector2 velocity = new Vector2(); // ‘¬“x
-                                          // UŒ‚‚Ìí—ŞŒˆ’è
+        // æ”»æ’ƒé–‹å§‹
+        Vector2 velocity = new Vector2(); // é€Ÿåº¦
+                                          // æ”»æ’ƒã®ç¨®é¡æ±ºå®š
         if (Random.Range(0, 100) < jumpRatio)
-        {// ƒWƒƒƒ“ƒvUŒ‚
+        {// ã‚¸ãƒ£ãƒ³ãƒ—æ”»æ’ƒ
             velocity.x = jumpSpeed;
             velocity.y = Random.Range(jumpPower_Min, jumpPower_Max);
         }
         else
-        {// ’ÊíˆÚ“®
+        {// é€šå¸¸ç§»å‹•
             velocity.x = movingSpeed;
         }
 
-        // ƒAƒNƒ^[‚Æ‚ÌˆÊ’uŠÖŒW‚©‚çŒü‚«‚ğŒˆ’è
+        // ã‚¢ã‚¯ã‚¿ãƒ¼ã¨ã®ä½ç½®é–¢ä¿‚ã‹ã‚‰å‘ãã‚’æ±ºå®š
         if (transform.position.x > actorTransform.position.x)
-        {// ¶Œü‚«
+        {// å·¦å‘ã
             SetFacingRight(false);
             velocity.x *= -1.0f;
         }
         else
-        {// ‰EŒü‚«
+        {// å³å‘ã
             SetFacingRight(true);
         }
 
-        // ‘¬“x‚ğ”½‰f
-        rb.velocity = velocity;
+        // é€Ÿåº¦ã‚’åæ˜ 
+        rb.linearVelocity = velocity;
     }
 }

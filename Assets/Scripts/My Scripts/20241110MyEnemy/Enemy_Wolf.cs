@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ŒÂ•Ê“GƒNƒ‰ƒXFWolf
+/// å€‹åˆ¥æ•µã‚¯ãƒ©ã‚¹ï¼šWolf
 /// 
-/// ¶‰E‰•œˆÚ“®
+/// å·¦å³å¾€å¾©ç§»å‹•
 /// </summary>
 public class Enemy_Wolf : EnemyBase
 {
-    // İ’è€–Ú
-    [Header("ˆÚ“®‘¬“x")]
+    // è¨­å®šé …ç›®
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float movingSpeed;
 
     // FixedUpdate
     void FixedUpdate()
     {
-        // Á–Å’†‚È‚çˆÚ“®‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰ç§»å‹•ã—ãªã„
         if (isVanishing)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             return;
         }
 
-        // •Ç‚É‚Ô‚Â‚©‚Á‚½‚çŒü‚«•ÏX
-        if (rightFacing && rb.velocity.x <= 0.0f)
+        // å£ã«ã¶ã¤ã‹ã£ãŸã‚‰å‘ãå¤‰æ›´
+        if (rightFacing && rb.linearVelocity.x <= 0.0f)
             SetFacingRight(false);
-        else if (!rightFacing && rb.velocity.x >= 0.0f)
+        else if (!rightFacing && rb.linearVelocity.x >= 0.0f)
             SetFacingRight(true);
 
-        // ‰¡ˆÚ“®(“™‘¬)
+        // æ¨ªç§»å‹•(ç­‰é€Ÿ)
         float xSpeed = movingSpeed;
         if (!rightFacing)
             xSpeed *= -1.0f;
-        rb.velocity = new Vector2(xSpeed, rb.velocity.y);
+        rb.linearVelocity = new Vector2(xSpeed, rb.linearVelocity.y);
     }
 }
