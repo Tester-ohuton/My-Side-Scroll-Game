@@ -3,38 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ŒÂ•Ê“GƒNƒ‰ƒXFCrow
+/// å€‹åˆ¥æ•µã‚¯ãƒ©ã‚¹ï¼šCrow
 /// 
-/// ‹ó’†¶‰E‰•œˆÚ“®(•Ç‚Å”½“])
+/// ç©ºä¸­å·¦å³å¾€å¾©ç§»å‹•(å£ã§åè»¢)
 /// </summary>
 public class Enemy_Crow : EnemyBase
 {
     public enum Enemy05Mode
     {
-        WALK,       // •à‚­
-        DIE,        // “|‚ê‚é
+        WALK,       // æ­©ã
+        DIE,        // å€’ã‚Œã‚‹
 
-        PLAYER_DIE, // ƒvƒŒƒCƒ„[‚ª“|‚ê‚½Œã
+        PLAYER_DIE, // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã‚ŒãŸå¾Œ
 
         MAX
     }
 
-    // Œ»İ‚Ìƒ‚[ƒh‚ğƒCƒ“ƒXƒyƒNƒ^‚Åİ’è‰Â”\‚É‚·‚é
+    // ç¾åœ¨ã®ãƒ¢ãƒ¼ãƒ‰ã‚’ã‚¤ãƒ³ã‚¹ãƒšã‚¯ã‚¿ã§è¨­å®šå¯èƒ½ã«ã™ã‚‹
     [SerializeField] private Enemy05Mode curMode;
 
     [SerializeField] private Enemy05Mode initialMode = Enemy05Mode.WALK;
 
     [SerializeField] private Enemy05Mode preMode;
 
-    // İ’è€–Ú
-    [Header("ˆÚ“®‘¬“x")]
+    // è¨­å®šé …ç›®
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float movingSpeed;
 
-    // Šeí•Ï”
-    private float previousPositionX; // ‘O‰ñƒtƒŒ[ƒ€‚ÌXÀ•W
+    // å„ç¨®å¤‰æ•°
+    private float previousPositionX; // å‰å›ãƒ•ãƒ¬ãƒ¼ãƒ ã®Xåº§æ¨™
     
-    // ’è”’è‹`
-    private const float MoveAnimationSpan = 0.3f; // ˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒXƒvƒ‰ƒCƒgØ‚è‘Ö‚¦ŠÔ
+    // å®šæ•°å®šç¾©
+    private const float MoveAnimationSpan = 0.3f; // ç§»å‹•ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆ‡ã‚Šæ›¿ãˆæ™‚é–“
 
     private GameObject playerObj;
     private PlayerStatus playerStatus;
@@ -46,29 +46,29 @@ public class Enemy_Crow : EnemyBase
         enemy = this.transform.GetChild(0).GetComponent<Enemy>();
         status = this.transform.GetChild(0).GetComponent<EnemyStatus>();
 
-        // ƒvƒŒƒCƒ„[
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
         playerObj = GameObject.Find("Actor");
         playerStatus = playerObj.GetComponent<PlayerStatus>();
 
-        // ‰Šúƒ‚[ƒhæ“¾
+        // åˆæœŸãƒ¢ãƒ¼ãƒ‰å–å¾—
         curMode = initialMode;
     }
 
     // Update
     void Update()
     {
-        // Á–Å’†‚È‚çˆ—‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰å‡¦ç†ã—ãªã„
         if (isVanishing)
             return;
 
-        // ‘Ì—Í‚O‚É‚È‚Á‚½‚çƒ‚[ƒh•ÏX
+        // ä½“åŠ›ï¼ã«ãªã£ãŸã‚‰ãƒ¢ãƒ¼ãƒ‰å¤‰æ›´
         if (status.GetHp() <= 0)
         {
             curMode = Enemy05Mode.DIE;
         }
 
-        // ƒvƒŒƒCƒ„[‚ª“|‚ê‚½‚ç•à‚«ƒ‚[ƒh‚Ö
-        // •à‚«ƒ‚[ƒh‚É‚È‚Á‚½‚ç“ü‚ç‚È‚¢
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã‚ŒãŸã‚‰æ­©ããƒ¢ãƒ¼ãƒ‰ã¸
+        // æ­©ããƒ¢ãƒ¼ãƒ‰ã«ãªã£ãŸã‚‰å…¥ã‚‰ãªã„
         if (playerStatus.GetCurHp() <= 0 &&
             curMode != Enemy05Mode.WALK)
         {
@@ -79,7 +79,7 @@ public class Enemy_Crow : EnemyBase
         {
             case Enemy05Mode.DIE:
 
-                // ƒfƒoƒbƒO—p
+                // ãƒ‡ãƒãƒƒã‚°ç”¨
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     if (enemy != null)
@@ -101,10 +101,10 @@ public class Enemy_Crow : EnemyBase
     // FixedUpdate
     void FixedUpdate()
     {
-        // Á–Å’†‚È‚çˆÚ“®‚µ‚È‚¢
+        // æ¶ˆæ»…ä¸­ãªã‚‰ç§»å‹•ã—ãªã„
         if (isVanishing)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             return;
         }
 
@@ -112,19 +112,19 @@ public class Enemy_Crow : EnemyBase
         {
             case Enemy05Mode.WALK:
 
-                // Œ»İ‚ÌXÀ•W‚ğæ“¾
+                // ç¾åœ¨ã®Xåº§æ¨™ã‚’å–å¾—
                 float currentPositionX = transform.position.x;
 
-                // ‘O‰ñˆÊ’u‚ÆXÀ•W‚ª‚Ù‚Ú•Ï‚í‚Á‚Ä‚¢‚È‚¢‚È‚çŒü‚«‚ğ”½“]‚·‚é
+                // å‰å›ä½ç½®ã¨Xåº§æ¨™ãŒã»ã¼å¤‰ã‚ã£ã¦ã„ãªã„ãªã‚‰å‘ãã‚’åè»¢ã™ã‚‹
                 if (Mathf.Approximately(currentPositionX, previousPositionX))
                 {
                     SetFacingRight(!rightFacing);
                 }
 
-                // Œ»İ‚ÌXÀ•W‚ğ‘O‰ñ‚ÌXÀ•W‚Æ‚µ‚Ä•Û‘¶
+                // ç¾åœ¨ã®Xåº§æ¨™ã‚’å‰å›ã®Xåº§æ¨™ã¨ã—ã¦ä¿å­˜
                 previousPositionX = currentPositionX;
 
-                // ‰¡ˆÚ“®(“™‘¬)
+                // æ¨ªç§»å‹•(ç­‰é€Ÿ)
                 float xSpeed = movingSpeed;
                 if (!rightFacing)
                     xSpeed *= -1.0f;
@@ -134,19 +134,19 @@ public class Enemy_Crow : EnemyBase
 
             case Enemy05Mode.PLAYER_DIE:
 
-                // Œ»İ‚ÌXÀ•W‚ğæ“¾
+                // ç¾åœ¨ã®Xåº§æ¨™ã‚’å–å¾—
                 float currentPositionX_Survival = transform.position.x;
 
-                // ‘O‰ñˆÊ’u‚ÆXÀ•W‚ª‚Ù‚Ú•Ï‚í‚Á‚Ä‚¢‚È‚¢‚È‚çŒü‚«‚ğ”½“]‚·‚é
+                // å‰å›ä½ç½®ã¨Xåº§æ¨™ãŒã»ã¼å¤‰ã‚ã£ã¦ã„ãªã„ãªã‚‰å‘ãã‚’åè»¢ã™ã‚‹
                 if (Mathf.Approximately(currentPositionX_Survival, previousPositionX))
                 {
                     SetFacingRight(!rightFacing);
                 }
 
-                // Œ»İ‚ÌXÀ•W‚ğ‘O‰ñ‚ÌXÀ•W‚Æ‚µ‚Ä•Û‘¶
+                // ç¾åœ¨ã®Xåº§æ¨™ã‚’å‰å›ã®Xåº§æ¨™ã¨ã—ã¦ä¿å­˜
                 previousPositionX = currentPositionX_Survival;
 
-                // ‰¡ˆÚ“®(“™‘¬)
+                // æ¨ªç§»å‹•(ç­‰é€Ÿ)
                 float xSpeed_Survival = movingSpeed;
                 if (!rightFacing)
                     xSpeed_Survival *= -1.0f;

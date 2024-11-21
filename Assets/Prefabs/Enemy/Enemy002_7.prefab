@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 7652198347503669047}
   - component: {fileID: 4914692196147122268}
   m_Layer: 0
-  m_Name: Enemy002_7
+  m_Name: child0
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,6 +191,7 @@ MonoBehaviour:
   curHP: 0
   ATK: 0
   DEF: 0
+  enemyName: 
   HPUI: {fileID: 8997712263328582161}
 --- !u!114 &7652198347503669047
 MonoBehaviour:
@@ -234,7 +235,6 @@ GameObject:
   - component: {fileID: 6453397449265814893}
   - component: {fileID: 3576180858796564550}
   - component: {fileID: 875570207161212778}
-  - component: {fileID: 6735048735085126684}
   m_Layer: 0
   m_Name: Enemy002_7
   m_TagString: Enemy
@@ -356,28 +356,6 @@ MonoBehaviour:
   visualRange: 5
   dir: 1
   BackDir: {x: 0, y: 0, z: 0}
---- !u!114 &6735048735085126684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9203642683725202413}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d2ac36199342df41a60a06cb39a237d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaManager: {fileID: 0}
-  touchDamage: 0
-  isBoss: 0
-  bossDefeatParticlePrefab: {fileID: 0}
-  nowHP: 0
-  isDamaged: 0
-  isDead: 0
-  isVanishing: 0
-  isInvis: 0
-  rightFacing: 0
 --- !u!1001 &158595296860392104
 PrefabInstance:
   m_ObjectHideFlags: 0
