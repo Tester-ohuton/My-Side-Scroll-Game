@@ -143,3 +143,5 @@ Assets/Scenes/Level1.unity.meta
 Assets/Scenes/Level2.unity.meta
 Assets/Scenes/Level3.unity.meta
 Assets/Scripts/My Scripts/UI/LoopMoveUI.cs.meta
+Assets/Scripts/My Scripts/Select.meta
+Assets/Scripts/My Scripts/Select/ChoiceLevelNo.cs.meta

@@ -61,19 +61,4 @@ public class StaticStatus : MonoBehaviour
         PlayerDEF += def;
         PlayerLUCK += luck;
     }
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -348,6 +348,18 @@ MonoBehaviour:
           m_StringArgument: Level1
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 337521447}
+        m_TargetAssemblyTypeName: ChoiceLevelNo, Assembly-CSharp
+        m_MethodName: LevelNo
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &133896449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +506,18 @@ MonoBehaviour:
           m_StringArgument: Level3
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 337521447}
+        m_TargetAssemblyTypeName: ChoiceLevelNo, Assembly-CSharp
+        m_MethodName: LevelNo
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &294446096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,6 +566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 337521445}
   - component: {fileID: 337521446}
+  - component: {fileID: 337521447}
   m_Layer: 5
   m_Name: Buttons
   m_TagString: Untagged
@@ -597,6 +622,22 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &337521447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337521444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b186b3927182324897b7e9bb58f2d09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelButtons:
+  - {fileID: 133896448}
+  - {fileID: 618184475}
+  - {fileID: 294446095}
 --- !u!1001 &422175781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -760,6 +801,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Level2
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 337521447}
+        m_TargetAssemblyTypeName: ChoiceLevelNo, Assembly-CSharp
+        m_MethodName: LevelNo
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &618184476

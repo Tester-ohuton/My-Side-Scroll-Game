@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class GroundCheck3D : MonoBehaviour
 {
-
     [SerializeField]
     float groundCheckRadius = 0.4f;
     [SerializeField]
@@ -14,4 +13,8 @@ public class GroundCheck3D : MonoBehaviour
 
     RaycastHit hit;
 
+    public bool CheckGroundStatus()
+    {
+        return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
+    }
 }

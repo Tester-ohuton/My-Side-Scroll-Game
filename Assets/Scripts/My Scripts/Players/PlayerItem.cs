@@ -39,6 +39,4 @@ public class PlayerItem : ScriptableObject
     {
         return information;
     }
-
-    
 }

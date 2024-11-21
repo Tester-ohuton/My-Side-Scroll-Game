@@ -27,7 +27,6 @@ public class StaticClear : MonoBehaviour
         return ClearNum;
     }
     
-    
     // ƒNƒŠƒAŽž‰ÁŽZ
     public static void AddClearNum()
     {
@@ -37,18 +36,5 @@ public class StaticClear : MonoBehaviour
         {
             ClearNum++;
         }
-    }
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

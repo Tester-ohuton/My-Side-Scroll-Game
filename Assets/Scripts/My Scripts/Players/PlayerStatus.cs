@@ -101,5 +101,4 @@ public class PlayerStatus : MonoBehaviour
     {
         return maxHP;
     }
-
 }
