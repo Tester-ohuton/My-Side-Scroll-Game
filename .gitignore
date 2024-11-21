@@ -139,3 +139,7 @@ Assets/Prefabs/Item/Item_大根.prefab.meta
 Assets/Prefabs/Item/Item_豆腐.prefab.meta
 Assets/Prefabs/Item/Item_白みそ.prefab.meta
 Assets/Prefabs/Item/Item_餡餅.prefab.meta
+Assets/Scenes/Level1.unity.meta
+Assets/Scenes/Level2.unity.meta
+Assets/Scenes/Level3.unity.meta
+Assets/Scripts/My Scripts/UI/LoopMoveUI.cs.meta
