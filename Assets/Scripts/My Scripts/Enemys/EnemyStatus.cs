@@ -23,6 +23,9 @@ public class EnemyStatus : MonoBehaviour
 
     [SerializeField] int DEF;
 
+    // 敵の名前
+    [SerializeField] string enemyName;/*2024/11/20*/
+
     // HP表示用UI
     [SerializeField] private GameObject HPUI;
 
@@ -37,10 +40,10 @@ public class EnemyStatus : MonoBehaviour
         curHP = maxHP = enemyinfo.enemyData.GetHp();
         ATK = enemyinfo.enemyData.GetATK();
         DEF = enemyinfo.enemyData.GetDEF();
+        enemyName = enemyinfo.enemyData.GetEnemyName();/*2024/11/20*/
         HPUI.SetActive(true);
         hpSlider = HPUI.transform.Find("HPBar").GetComponent<Slider>();
         hpSlider.value = 1.0f;
-
     }
 
     // Update is called once per frame
@@ -80,6 +83,12 @@ public class EnemyStatus : MonoBehaviour
     public int GetDEF()
     {
         return DEF;
+    }
+
+    /*2024/11/20*/
+    public string GetEnemyName()
+    {
+        return enemyName;
     }
 
     // 死んだらHPUIを非表示にする
