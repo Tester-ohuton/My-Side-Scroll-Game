@@ -29,6 +29,7 @@ public class Enemy02Move : MonoBehaviour
 
     [SerializeField] private float walkRange = 2.0f;
     [SerializeField] private float visualRange = 5.0f;
+    [SerializeField] private float moveY = 0.9f;
 
     private GameObject playerObj;
     private Player player;
@@ -160,7 +161,7 @@ public class Enemy02Move : MonoBehaviour
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
                 {
                     pos.x += newDir.x * Time.deltaTime;
-                    pos.y += newDir.y * Time.deltaTime;
+                    pos.y += newDir.y * Time.deltaTime * moveY;
                 }
                 break;
 
@@ -203,7 +204,7 @@ public class Enemy02Move : MonoBehaviour
                     pos.x += newDir.x * Time.deltaTime * 2.0f;
                     if (pos.y < initPos.y + 10.0f)
                     {
-                        pos.y += newDir.y * Time.deltaTime;
+                        pos.y += newDir.y * Time.deltaTime * moveY;
                     }
                 }
                 break;
@@ -218,7 +219,7 @@ public class Enemy02Move : MonoBehaviour
                 {
                     if (Mathf.Abs(initPos.y - thistrans.position.y) > 0.01f)
                     {
-                        pos.y += newDir.y * Time.deltaTime * 10;
+                        pos.y += newDir.y * Time.deltaTime * moveY;
                     }
                 }
 
@@ -261,7 +262,7 @@ public class Enemy02Move : MonoBehaviour
 
                     if (!isDead)
                     {
-                        StaticEnemy.IsUpdate = false;
+                        StaticEnemy.IsUpdate = true;
                         isDead = true;
                     }
                 }
@@ -287,7 +288,7 @@ public class Enemy02Move : MonoBehaviour
                 if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
                 {
                     pos.x += newDir.x * Time.deltaTime;
-                    pos.y += newDir.y * Time.deltaTime;
+                    pos.y += newDir.y * Time.deltaTime * moveY;
                 }
                 break;
 
@@ -371,7 +372,7 @@ public class Enemy02Move : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
         {
             pos.x += newDir.x * Time.deltaTime;
-            pos.y += newDir.y * Time.deltaTime;
+            pos.y += newDir.y * Time.deltaTime * moveY;
         }
     }
 
@@ -415,7 +416,7 @@ public class Enemy02Move : MonoBehaviour
             pos.x += newDir.x * Time.deltaTime * 2.0f;
             if (pos.y < initPos.y + 10.0f)
             {
-                pos.y += newDir.y * Time.deltaTime;
+                pos.y += newDir.y * Time.deltaTime * moveY;
             }
         }
     }
@@ -431,7 +432,7 @@ public class Enemy02Move : MonoBehaviour
         {
             if (Mathf.Abs(initPos.y - thistrans.position.y) > 0.01f)
             {
-                pos.y += newDir.y * Time.deltaTime * 5;
+                pos.y += newDir.y * Time.deltaTime * moveY;
             }
         }
 
@@ -506,7 +507,7 @@ public class Enemy02Move : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
         {
             pos.x += newDir.x * Time.deltaTime;
-            pos.y += newDir.y * Time.deltaTime;
+            pos.y += newDir.y * Time.deltaTime * moveY;
         }
     }
 
@@ -575,7 +576,10 @@ public class Enemy02Move : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             animator.SetBool("isCollide", true);
+            ////初期位置へ戻るモードへ
+            ///歩きモードへ
             curMode = Enemy02Mode.WALK;
+            Debug.Log("ぶつかった");
         }
     }
 

@@ -856,6 +856,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &996304211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2212862598623296408, guid: b6a2d167cc4ea3b4c93c7966e23e9801, type: 3}
+  m_PrefabInstance: {fileID: 8452948253106506688}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1228714231
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f231a3531130043a2659869dbb7855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clearNum: 1
 --- !u!4 &1228714233
 Transform:
   m_ObjectHideFlags: 0
@@ -1151,8 +1157,11 @@ MonoBehaviour:
   gravity: 20
   charaobj: {fileID: 1742705329}
   camobj: {fileID: 963194225}
-  stopMoverment: 0
-  useGravity: 1
+  rayLength: 1
+  rayOffset: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &1742705339
 Animator:
   serializedVersion: 7
@@ -1390,6 +1399,7 @@ MonoBehaviour:
   SE:
   - {fileID: 8300000, guid: d9fe89de62389664691eb44100c307b0, type: 3}
   - {fileID: 8300000, guid: c69d6439f03e07d48b4dc1a3e69e0290, type: 3}
+  - {fileID: 8300000, guid: aea5f626454420247908383895c67a4f, type: 3}
 --- !u!1 &2068193349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,6 +2059,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1726433090475407001, guid: b6a2d167cc4ea3b4c93c7966e23e9801, type: 3}
+      propertyPath: enemyData
+      value: 
+      objectReference: {fileID: 11400000, guid: d312a2e6605c70c44833bf45289189bd, type: 2}
     - target: {fileID: 2212862598623296408, guid: b6a2d167cc4ea3b4c93c7966e23e9801, type: 3}
       propertyPath: m_Name
       value: Slime_01
@@ -2101,6 +2115,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6273011554980875447, guid: b6a2d167cc4ea3b4c93c7966e23e9801, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 996304211}
     - target: {fileID: 6874171241309368170, guid: b6a2d167cc4ea3b4c93c7966e23e9801, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.003

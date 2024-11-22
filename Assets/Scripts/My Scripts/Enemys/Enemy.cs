@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     
     private DropItem item;
     private EnemyStatus sta;
+    private MyEnemy myEnemy;
+    private EnemyInfo enemyInfo;
 
     public bool isdead;
 
@@ -22,6 +24,9 @@ public class Enemy : MonoBehaviour
     {
         item = GetComponent<DropItem>();
         sta = GetComponent<EnemyStatus>();
+        enemyInfo = GetComponent<EnemyInfo>();
+
+        myEnemy = GameObject.Find("Actor").GetComponent<MyEnemy>();
     }
 
     // Update is called once per frame
@@ -58,6 +63,10 @@ public class Enemy : MonoBehaviour
             //Destroy(gameObject.transform.parent.gameObject);
 
             Quest_Level_1.OnEnemyDestroyCountEvent.Invoke();
+
+            
+            myEnemy.AddEnemy(enemyInfo.enemyData.GetEnemyType());
+            Debug.Log(enemyInfo.enemyData.GetEnemyType());
 
             enemyPrefab.SetActive(false);
             sta.Init();

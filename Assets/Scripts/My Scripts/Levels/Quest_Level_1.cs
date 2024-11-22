@@ -7,7 +7,7 @@ public class Quest_Level_1 : MonoBehaviour
 
     public static UnityEvent OnEnemyDestroyCountEvent = new UnityEvent();
 
-    public static UnityEvent OngameClearEvent = new UnityEvent();
+    public static UnityEvent OnGameClearEvent = new UnityEvent();
 
     private int enemyCounter;
     private bool isGameClear;
@@ -21,9 +21,10 @@ public class Quest_Level_1 : MonoBehaviour
             AddScore(1);
         });
 
-        OngameClearEvent.AddListener(() =>
+        OnGameClearEvent.AddListener(() =>
         {
             GameClear();
+            GameClearSceneChange();
         });
     }
 
@@ -33,7 +34,7 @@ public class Quest_Level_1 : MonoBehaviour
         {
             if (clearNum <= enemyCounter)
             {
-                OngameClearEvent.Invoke();
+                OnGameClearEvent.Invoke();
                 isGameClear = true;
             }
         }
@@ -50,6 +51,11 @@ public class Quest_Level_1 : MonoBehaviour
     }
 
     public void GameClear()
+    {
+        StaticClear.AddClearNum();
+    }
+
+    public void GameClearSceneChange()
     {
         FadeManager.Instance.LoadScene("Game Clear", 2.0f);   
     }

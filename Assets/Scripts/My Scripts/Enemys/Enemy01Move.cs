@@ -221,7 +221,7 @@ public class Enemy01Move : MonoBehaviour
 
                     if (!isDead)
                     {
-                        StaticEnemy.IsUpdate = false;
+                        StaticEnemy.IsUpdate = true;
                         isDead = true;
                     }
                 }
@@ -359,6 +359,9 @@ public class Enemy01Move : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             animator.SetBool("isCollide", true);
+            ////‰ŠúˆÊ’u‚Ö–ß‚éƒ‚[ƒh‚Ö
+            curMode = Enemy01Mode.BACK;
+            Debug.Log("‚Ô‚Â‚©‚Á‚½");
         }
     }
 

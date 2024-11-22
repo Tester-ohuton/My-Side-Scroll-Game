@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DropItemPlayer : MonoBehaviour
 {
-    public GameObject ItemObject;
+    public GameObject itemObject;
     [SerializeField]
     private PlayerItem item;
 
@@ -12,7 +12,7 @@ public class DropItemPlayer : MonoBehaviour
     {
         if (item.GetItemName() == "HAKA")
         {
-            Instantiate(ItemObject, transform.position, Quaternion.identity);
+            Instantiate(itemObject, transform.position, Quaternion.identity);
         }
     }
 }

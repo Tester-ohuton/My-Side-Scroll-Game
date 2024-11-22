@@ -17,8 +17,13 @@ public class Enemy03Move : MonoBehaviour
         MAX
     }
 
-    // 現在のモード
-    Enemy03Mode curMode;
+    /// 現在のモード
+    // 現在のモードをインスペクタで設定可能にする
+    [SerializeField] private Enemy03Mode curMode;
+
+    [SerializeField] private Enemy03Mode initialMode = Enemy03Mode.WALK;
+
+    [SerializeField] private Enemy03Mode preMode;
 
     Enemy enemy;
     EnemyStatus status;
@@ -56,7 +61,6 @@ public class Enemy03Move : MonoBehaviour
     float KnockTime = 0.0f;
     int Step;
     bool isStart = false;
-    Enemy03Mode preMode;
 
     bool isDead = false;
 
@@ -72,7 +76,7 @@ public class Enemy03Move : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // 初期モード取得
-        curMode = Enemy03Mode.WALK;
+        curMode = initialMode;
 
         // 初期位置取得
         initPos = this.transform.position;
@@ -206,7 +210,7 @@ public class Enemy03Move : MonoBehaviour
 
             case Enemy03Mode.DIE:
                 // デバッグ用
-                if (Input.GetKeyDown(KeyCode.Z))
+                if (Input.GetKeyDown(KeyCode.Return))
                 {
                     if (enemy != null)
                     {
@@ -223,7 +227,7 @@ public class Enemy03Move : MonoBehaviour
 
                     if (!isDead)
                     {
-                        StaticEnemy.IsUpdate = false;
+                        StaticEnemy.IsUpdate = true;
                         isDead = true;
                     }
                 }
@@ -338,8 +342,8 @@ public class Enemy03Move : MonoBehaviour
         {
             // ぶつかったら歩き
             animator.SetBool("isCollide", true);
-            //// 初期位置へ戻るモードへ
-            //curMode = EnemyMode.BACK;
+            ////初期位置へ戻るモードへ
+            curMode = Enemy03Mode.BACK;
             Debug.Log("ぶつかった");
         }
         //curMode = EnemyMode.WALK;

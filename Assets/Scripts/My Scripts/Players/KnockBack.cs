@@ -22,7 +22,7 @@ public class KnockBack : MonoBehaviour
     Rigidbody rb;
 
     // 操作不可時間
-    float inoperableTime = 1.0f;
+    float inoperableTime = 0.1f;
 
     // 操作不可フラグ
     bool isInoperable = false;
@@ -41,7 +41,7 @@ public class KnockBack : MonoBehaviour
     Coroutine flicker;
 
     // ダメージの点滅の長さ。
-    float flickerDuration = 1.6f;
+    float flickerDuration = 0.6f;
 
     // 無敵時間
     float invincibleTime;
@@ -188,7 +188,7 @@ public class KnockBack : MonoBehaviour
                 // 無敵時間初期化
                 invincibleTime = 2.0f;
                 // 操作不可時間初期化
-                inoperableTime = 1.0f;
+                inoperableTime = 0.1f;
                 // 強制で次のステップへ
                 KnockTime = 0.0f;
                 break;
