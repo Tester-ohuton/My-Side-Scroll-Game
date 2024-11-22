@@ -148,3 +148,9 @@ Assets/Scripts/My Scripts/Select/ChoiceLevelNo.cs.meta
 Assets/Settings.meta
 Assets/Settings/Build Profiles.meta
 Assets/Settings/
+Assets/Scenes/FirstPerson.unity.meta
+Assets/Scripts/FirstPerson.meta
+Assets/Scripts/FirstPerson/FirstPersonController.cs.meta
+Assets/Scripts/FirstPerson/FPCameraLook.cs.meta
+Assets/Scripts/FirstPerson/FPComponentBase.cs.meta
+Assets/Scripts/FirstPerson/FPMovement.cs.meta
