@@ -75,9 +75,7 @@ public class Player : MonoBehaviour
             LeaveTime += Time.deltaTime;
             if (LeaveTime > 5.0f)
             {
-
                 anime.SetBool("isLeave", true);
-
             }
         }
         // 放置モーションに入ったら放置時間初期化

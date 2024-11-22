@@ -86,12 +86,6 @@ public class AttackContoroll : MonoBehaviour
 
             hitflg = true;
 
-            if (enemyStatus.GetHp() <= 0)
-            {
-                myEnemy.AddEnemy(enemyInfo.enemyData.GetEnemyType());
-                Debug.Log(enemyInfo.enemyData.GetEnemyType());
-            }
-
             if (damageEffect != null)
             {
                 GameObject effect = Instantiate(damageEffect) as GameObject;

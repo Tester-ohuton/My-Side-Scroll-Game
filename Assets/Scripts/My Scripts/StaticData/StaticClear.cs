@@ -35,6 +35,7 @@ public class StaticClear : MonoBehaviour
         if (StageNo > ClearNum)
         {
             ClearNum++;
+            Debug.Log($"ClearNum:{ClearNum}");
         }
     }
 }

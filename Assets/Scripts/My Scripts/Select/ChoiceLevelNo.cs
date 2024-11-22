@@ -14,7 +14,7 @@ public class ChoiceLevelNo : MonoBehaviour
     {
         for (int i = 1; i < levelButtons.Length; i++)
         {
-            if (i < StaticClear.GetClearNum())
+            if (i <= StaticClear.GetClearNum())
                 levelButtons[i].interactable = true;
             else
                 levelButtons[i].interactable = false;
