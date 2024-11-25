@@ -81,7 +81,7 @@ public class Enemy_Frog : EnemyBase
                 timeCount = 0.0f;
 
                 // アクターとの位置関係から向きを決定
-                if (transform.position.x > actorTransform.position.x)
+                if (transform.position.x > playerStatus.transform.position.x)
                 {// 左向き
                     SetFacingRight(false);
                 }

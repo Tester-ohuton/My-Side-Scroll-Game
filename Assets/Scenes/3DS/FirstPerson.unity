@@ -135,6 +135,9 @@ GameObject:
   - component: {fileID: 39811738}
   - component: {fileID: 39811737}
   - component: {fileID: 39811744}
+  - component: {fileID: 39811746}
+  - component: {fileID: 39811745}
+  - component: {fileID: 39811747}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -301,6 +304,48 @@ MonoBehaviour:
   lookSpeed: 2
   upperLookLimit: 50
   lowerLookLimit: 50
+--- !u!114 &39811745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39811736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53fd9f16a9cf66846bfc61e7711175b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpHeight: 2
+--- !u!114 &39811746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39811736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e56874697375b7459545f42bb4b4a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprintSpeedScale: 2
+  sprintKey: 304
+--- !u!114 &39811747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39811736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6176d9e31fdd44cab7038ba2ea33b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crouchingHeight: 1
+  crouchKey: 306
+  duration: 0.5
 --- !u!1 &83896115
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,6 @@ public class EnemyBase : MonoBehaviour
     // オブジェクト・コンポーネント
     [HideInInspector] public AreaManager areaManager; // エリアマネージャ
     protected Rigidbody rb; // Rigidbody/
-    protected Transform actorTransform; // 主人公(アクター)のTransform
     protected Image bossHPGage; // ボス用HPゲージ
     protected EnemyStatus enemyStatus;
 
@@ -66,7 +65,6 @@ public class EnemyBase : MonoBehaviour
     {
         // 参照取得
         areaManager = _areaManager;
-        actorTransform = areaManager.stageManager.player.transform;
         rb = GetComponent<Rigidbody>();
 
         enemyStatus = this.transform.GetChild(0).GetComponent<EnemyStatus>();

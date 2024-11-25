@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private EnemyStatus sta;
     private MyEnemy myEnemy;
     private EnemyInfo enemyInfo;
+    private GameObject player;
 
     public bool isdead;
 
@@ -26,7 +27,8 @@ public class Enemy : MonoBehaviour
         sta = GetComponent<EnemyStatus>();
         enemyInfo = GetComponent<EnemyInfo>();
 
-        myEnemy = GameObject.Find("Actor").GetComponent<MyEnemy>();
+        player = GameObject.Find("Actor");
+        myEnemy = player.GetComponent<MyEnemy>();
     }
 
     // Update is called once per frame

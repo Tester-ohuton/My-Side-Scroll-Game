@@ -23,6 +23,9 @@ public class Enemy_Snake : EnemyBase
     // 各種変数
     private bool isBreaking;    // ブレーキ作動フラグ trueで減速する
 
+    private GameObject playerObj;
+    private PlayerStatus playerStatus;
+
     /// <summary>
     /// このモンスターの居るエリアにアクターが進入した時の起動時処理(エリアアクティブ化時処理)
     /// </summary>
@@ -32,6 +35,13 @@ public class Enemy_Snake : EnemyBase
         base.OnAreaActivated();
     }
 
+
+    private void Start()
+    {
+        // プレイヤー
+        playerObj = GameObject.Find("Actor");
+        playerStatus = playerObj.GetComponent<PlayerStatus>();
+    }
 
     // Update
     void Update()
@@ -43,7 +53,7 @@ public class Enemy_Snake : EnemyBase
         // アクターが近くにいると接近する処理
         float speed = 0.0f; // x方向移動速度
         Vector2 ePos = transform.position;  // エネミー座標
-        Vector2 aPos = actorTransform.position;   // アクター座標
+        Vector2 aPos = playerStatus.transform.position;   // アクター座標
 
         // アクターとの距離が離れている場合はブレーキフラグを立て終了(移動しない)
         if (Vector2.Distance(ePos, aPos) > awakeDistance)
