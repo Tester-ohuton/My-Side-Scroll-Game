@@ -30,6 +30,8 @@ public class PlayerStatus : MonoBehaviour
 
     Animator anime;
 
+    bool isDead = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +48,8 @@ public class PlayerStatus : MonoBehaviour
         //Debug.Log(LUK);
 
         anime = GetComponent<Animator>();
+
+        isDead = false;
     }
 
     // Update is called once per frame
@@ -61,32 +65,43 @@ public class PlayerStatus : MonoBehaviour
         {
             if (curHP <= 0)
             {
-                // 死んだアニメ再生
-                anime.SetBool("isDie", true);
-
-                if (anime.GetCurrentAnimatorStateInfo(0).IsName("DieEnd"))
+                if (!isDead)
                 {
-                    // プレイヤーを非アクティブ化
-                    playerObj.SetActive(false);
-                    // 墓生成
-                    Instantiate(ItemObject, transform.position, Quaternion.identity);
-                    // 当たり判定なくす
-                    ItemObject.layer = LayerMask.NameToLayer("Invisible");
+                    // 死んだアニメ再生
+                    anime.SetBool("isDie", true);
 
-                    if (seobj != null)
+                    if (anime.GetCurrentAnimatorStateInfo(0).IsName("DieEnd"))
                     {
-                        // 死んだときSE
-                        seobj.GetComponent<SEManager>().PlaySE(0);
+                        // プレイヤーを非アクティブ化
+                        playerObj.SetActive(false);
+                        // 墓生成
+                        Instantiate(ItemObject, transform.position, Quaternion.identity);
+                        // 当たり判定なくす
+                        ItemObject.layer = LayerMask.NameToLayer("Invisible");
+
+                        if (seobj != null)
+                        {
+                            // 死んだときSE
+                            seobj.GetComponent<SEManager>().PlaySE(0);
+                        }
+
+                        isDead = true;
                     }
                 }
             }
         }
     }
 
+    public void SetIsDead(bool isDie)
+    {
+        isDead = isDie;
+    }
 
     // HPを減らす
     public void SetMinusHp(float hp)
     {
+        if (this.curHP <= 0) return;
+
         this.curHP -= hp;
     }
 

@@ -10,7 +10,6 @@ using DG.Tweening;
 /// </summary>
 public class StageManager : MonoBehaviour
 {
-    [HideInInspector] public Player player; // アクター制御クラス
     public Image bossHPGage; // ボス用HPゲージImage
 
     [Header("初期エリアのAreaManager")]
@@ -27,9 +26,6 @@ public class StageManager : MonoBehaviour
     // Start
     void Start()
     {
-        // 参照取得
-        player = GetComponentInChildren<Player>();
-
         // ステージ内の全エリアを取得・初期化
         inStageAreas = GetComponentsInChildren<AreaManager>();
         foreach (var targetAreaManager in inStageAreas)

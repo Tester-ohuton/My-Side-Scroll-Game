@@ -5,7 +5,9 @@ using UnityEngine;
 public class BaseLayer : StateMachineBehaviour
 {
     GameObject scissors;
-    
+    Attack2DContoroll attack2DContoroll;
+    AttackContoroll attackContoroll;
+
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -23,8 +25,16 @@ public class BaseLayer : StateMachineBehaviour
     {
         // === ステートが終了したとき ===
         scissors = GameObject.Find("scissors1");
+
+        //GetComponent
+        attackContoroll = scissors.GetComponent<AttackContoroll>();
+        attack2DContoroll = scissors.GetComponent<Attack2DContoroll>();
+
         // はさみの当たり判定オフ
-        scissors.GetComponent<AttackContoroll>().SethitFlg(false);
+        if(attack2DContoroll != null)
+            attack2DContoroll.SethitFlg(false);
+        if(attackContoroll != null)
+            attackContoroll.SethitFlg(false);
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine
